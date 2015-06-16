@@ -101,7 +101,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>de.pm.minecloud.MineCloudApplication</mainClass>
+                            <mainClass>de.pm.mindcloud.MindCloudApplication</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
