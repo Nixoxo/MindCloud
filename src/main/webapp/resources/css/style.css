@@ -1,0 +1,24 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.navbar-brand {
+    padding: 10px;
+}
+
+.navbar-brand img {
+    display: inline-block;
+}
+
+.navbar-brand span {
+    margin-left: 5px;
+}
+
+.navbar.navbar-inverse {
+    background-image: none;
+}
+
+.navbar-inverse .navbar-nav > li > a:hover {
+    background: #444;
+}
