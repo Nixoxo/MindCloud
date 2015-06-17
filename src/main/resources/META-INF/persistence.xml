@@ -8,14 +8,26 @@
         <provider>org.hibernate.ogm.jpa.HibernateOgmPersistence</provider>
         <properties>
             <property name="hibernate.ogm.datastore.provider" value="MONGODB"/>
-
             <property name="hibernate.ogm.datastore.database" value="MindCloud"/>
             <property name="hibernate.ogm.datastore.create_database" value="true"/>
             <property name="hibernate.ogm.datastore.host" value="localhost"/>
             <property name="hibernate.ogm.datastore.port" value="27017"/>
             <property name="hibernate.ogm.datastore.username" value=""/>
             <property name="hibernate.ogm.datastore.password" value=""/>
-
         </properties>
     </persistence-unit>
+
+    <persistence-unit name="REMOTE" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.ogm.jpa.HibernateOgmPersistence</provider>
+        <properties>
+            <property name="hibernate.ogm.datastore.provider" value="MONGODB"/>
+            <property name="hibernate.ogm.datastore.database" value="dev"/>
+            <property name="hibernate.ogm.datastore.create_database" value="true"/>
+            <property name="hibernate.ogm.datastore.host" value="${db_host}"/>
+            <property name="hibernate.ogm.datastore.port" value="${db_port}"/>
+            <property name="hibernate.ogm.datastore.username" value="{db_username}"/>
+            <property name="hibernate.ogm.datastore.password" value="{db_password}"/>
+        </properties>
+    </persistence-unit>
+
 </persistence>
