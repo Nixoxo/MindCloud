@@ -21,9 +21,13 @@
 .nav-side-menu ul,
 .nav-side-menu li {
     list-style: none;
-    padding: 10px;
-    margin: 0px;
+    padding: 0;
+    margin: 0;
     cursor: pointer;
+}
+
+.nav-side-menu li {
+    padding: 10px;
 }
 
 .nav-side-menu ul .active,
@@ -43,11 +47,8 @@
 
 .nav-side-menu ul .sub-menu li,
 .nav-side-menu li .sub-menu li {
-    background-color: #181c20;
     border: none;
-    line-height: 28px;
     border-bottom: 1px solid #23282e;
-    margin-left: 0px;
 }
 
 .nav-side-menu ul .sub-menu li:hover,
@@ -56,19 +57,13 @@
 }
 
 .nav-side-menu li {
-    padding-left: 0px;
     border-bottom: 1px solid #3C3C3C;
+    display: block;
 }
 
 .nav-side-menu li a {
     text-decoration: none;
     color: #e1ffff;
-}
-
-.nav-side-menu li a i {
-    padding-left: 10px;
-    width: 20px;
-    padding-right: 20px;
 }
 
 .nav-side-menu li:hover {
