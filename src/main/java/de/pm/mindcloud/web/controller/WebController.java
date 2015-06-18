@@ -7,12 +7,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Source;
+import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamSource;
-import java.io.File;
 import java.io.IOException;
+
+import static de.pm.mindcloud.web.controller.XMLSource.*;
 
 /**
  * Created by samuel on 17.06.15.
@@ -27,40 +28,32 @@ public class WebController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String authenticateLogin(@RequestParam("username") String username, @RequestParam("password") String password) {
+    public ModelAndView authenticateLogin(@RequestParam("username") String username, @RequestParam("password") String password) {
         logger.info("Log in '" + username + "' with password '" + password + "'");
-        return "login";
+        ModelAndView model = new ModelAndView("login");
+        model.addObject("xmlSource", xml().node("error", "Login fehlgeschlagen").build());
+        return model;
     }
 
     @RequestMapping(value = "/login")
-    public String login() {
-        return "login";
+    public ModelAndView login() throws ParserConfigurationException {
+        ModelAndView model = new ModelAndView("login");
+        model.addObject("xmlSource", xml().build());
+        return model;
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String authenticateRegistration(@RequestParam("username") String username, @RequestParam("password") String password, @RequestParam("password2") String password2) {
+    public ModelAndView authenticateRegistration(@RequestParam("username") String username, @RequestParam("password") String password, @RequestParam("password2") String password2) {
         logger.info("Register '" + username + "' with password '" + password + "' and '" + password2 + "'");
-        return "register";
+        ModelAndView model = new ModelAndView("register");
+        model.addObject("xmlSource", xml().node("error", "Registrieren fehlgeschlagen").build());
+        return model;
     }
 
     @RequestMapping(value = "/register")
-    public String register() {
-        return "register";
-    }
-
-    @RequestMapping(value="/viewXSLT")
-    public ModelAndView viewXSLT(HttpServletRequest request,
-                                 HttpServletResponse response) throws IOException {
-        // builds absolute path of the XML file
-        String xmlFile = "citizens.xml";
-        String contextPath = request.getServletContext().getRealPath("");
-        String xmlFilePath = contextPath + File.separator + xmlFile;
-
-        Source source = new StreamSource(ClassLoader.getSystemResourceAsStream(xmlFile));
-
-        ModelAndView model = new ModelAndView("XSLTView");
-        model.addObject("xmlSource", source);
-
+    public ModelAndView register() {
+        ModelAndView model = new ModelAndView("register");
+        model.addObject("xmlSource", xml().build());
         return model;
     }
 }

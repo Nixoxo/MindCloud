@@ -19,7 +19,6 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         xsltResolover.setOrder(1);
         xsltResolover.setSourceKey("xmlSource");
         xsltResolover.setViewClass(XsltView.class);
-        xsltResolover.setViewNames(new String[]{"XSLTView"});
         xsltResolover.setPrefix("classpath:templates/");
         xsltResolover.setSuffix(".xsl");
         return xsltResolover;
