@@ -19,6 +19,9 @@ public class Node extends DomainObject {
 
     private String title;
 
+    @OneToOne
+    private Node parent;
+
     @OneToMany(cascade = CascadeType.ALL)
     private List<Node> nodes = new ArrayList<>();
 
@@ -30,6 +33,7 @@ public class Node extends DomainObject {
     }
 
     public void addNode(Node node) {
+        node.setParent(this);
         nodes.add(node);
     }
 
@@ -49,6 +53,13 @@ public class Node extends DomainObject {
         this.title = title;
     }
 
+    public Node getParent() {
+        return parent;
+    }
+
+    public void setParent(Node parent) {
+        this.parent = parent;
+    }
 
     @Override
     public String toString() {

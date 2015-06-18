@@ -26,6 +26,13 @@ public class NodeAccess {
     }
 
     public void delete(Node node) {
+
+        if (node.getParent() != null) {
+            Node parent = node.getParent();
+            parent.getNodes().remove(node);
+            database.update(parent);
+        }
+
         database.delete(node);
     }
 

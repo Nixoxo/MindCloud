@@ -1,5 +1,6 @@
 package de.pm.mindcloud.persistence.domain;
 
+import javax.persistence.Entity;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.List;
  * Created on 15/06/15
  * This class is responsible
  */
+@Entity
 public class MindMap {
 
     private String title;

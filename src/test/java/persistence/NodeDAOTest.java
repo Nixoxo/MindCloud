@@ -30,8 +30,8 @@ public class NodeDAOTest {
 //        Node two = new Node("Der zweite Streich");
 //        one.addNode(two);
 //        nodeAccess.save(one);
-        Node delete = nodeAccess.find(2);
-        nodeAccess.delete(delete);
+        Node deleteMe = nodeAccess.find(2);
+        nodeAccess.delete(deleteMe);
 //        Child three = new Child("third child");
 //        databaseService.insert(three);
 //        two.addNode(three);
