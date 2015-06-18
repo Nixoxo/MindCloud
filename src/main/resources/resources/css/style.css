@@ -3,12 +3,9 @@ body {
     padding: 0;
 }
 
-.navbar-brand {
-    padding: 10px;
-}
-
 .navbar-brand img {
     display: inline-block;
+    margin-top: -5px;
 }
 
 .navbar-brand span {
@@ -21,4 +18,17 @@ body {
 
 .navbar-inverse .navbar-nav > li > a:hover {
     background: #444;
+}
+
+.navbar-inverse .navbar-nav > li > a .glyphicon {
+    text-align: center;
+    line-height: 20px;
+    min-width: 20px;
+}
+
+.navbar-inverse .profile-thumbnail {
+    float: left;
+    height: 32px;
+    width: 32px;
+    margin: -6px 10px -6px 0;
 }

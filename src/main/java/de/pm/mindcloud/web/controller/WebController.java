@@ -19,8 +19,10 @@ public class WebController {
     private static Logger logger = Logger.getLogger(WebController.class);
 
     @RequestMapping(value = "/")
-    public String index() {
-        return "index";
+    public ModelAndView index() {
+        ModelAndView model = new ModelAndView("index");
+        model.addObject("xmlSource", xml().build());
+        return model;
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
