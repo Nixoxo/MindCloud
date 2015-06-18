@@ -62,6 +62,15 @@ public class Node extends DomainObject {
     }
 
     @Override
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Override
     public String toString() {
         return "{\"title\": \"" + title + "\", \"nodes\": " + Arrays.toString(nodes.toArray()) + "}";
     }

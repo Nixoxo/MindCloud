@@ -7,6 +7,7 @@
     <persistence-unit name="LOCAL" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.ogm.jpa.HibernateOgmPersistence</provider>
         <class>de.pm.mindcloud.persistence.domain.Node</class>
+        <class>de.pm.mindcloud.persistence.domain.MindMap</class>
 
         <properties>
             <property name="hibernate.ogm.datastore.provider" value="MONGODB"/>

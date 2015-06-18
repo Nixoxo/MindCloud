@@ -1,5 +1,7 @@
 package de.pm.mindcloud.persistence.repository;
 
+import de.pm.mindcloud.persistence.domain.DomainObject;
+
 import javax.persistence.Query;
 import java.util.List;
 
@@ -9,6 +11,8 @@ public interface DatabaseService {
     void insert(Object entity);
 
     void delete(Object entity);
+
+    void save(DomainObject entity);
 
     <T> T find(Class<T> clazz, Object id);
 

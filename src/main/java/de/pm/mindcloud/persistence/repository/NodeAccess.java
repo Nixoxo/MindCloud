@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class NodeAccess {
     @Autowired
-    private Database database;
+    private DatabaseService database;
 
     public Node find(int id) {
         return database.find(Node.class, id);

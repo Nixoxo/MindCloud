@@ -1,8 +1,9 @@
 package persistence;
 
 import de.pm.mindcloud.MindCloudApplication;
+import de.pm.mindcloud.persistence.domain.MindMap;
 import de.pm.mindcloud.persistence.domain.Node;
-import de.pm.mindcloud.persistence.repository.NodeAccess;
+import de.pm.mindcloud.persistence.repository.MindMapAccess;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,19 +23,28 @@ import org.springframework.test.context.web.WebAppConfiguration;
 public class NodeDAOTest {
 
     @Autowired
-    private NodeAccess nodeAccess;
+    private MindMapAccess mindMapAccess;
 
     @Test
-    public void createChild() throws Exception {
-//        Node one = new Node("Der erste Streich");
-//        Node two = new Node("Der zweite Streich");
-//        one.addNode(two);
-//        nodeAccess.save(one);
-        Node deleteMe = nodeAccess.find(2);
-        nodeAccess.delete(deleteMe);
-//        Child three = new Child("third child");
-//        databaseService.insert(three);
-//        two.addNode(three);
-//        databaseService.update(two);
+    public void createMindMap() throws Exception {
+
+        MindMap mindMap = new MindMap("Die yolo map");
+        Node first = new Node("First child");
+        Node second = new Node("Second child");
+        Node third = new Node("Third child");
+        Node fourth = new Node("Fourth child");
+
+        first.addNode(second);
+        second.addNode(third);
+        third.addNode(fourth);
+
+        mindMap.getNodes().add(first);
+        mindMapAccess.save(mindMap);
+    }
+
+    @Test
+    public void deleteMindMap() throws Exception {
+        MindMap deleeMte = mindMapAccess.find(3);
+        mindMapAccess.delete(deleeMte);
     }
 }
