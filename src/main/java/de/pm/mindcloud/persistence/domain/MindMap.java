@@ -1,6 +1,8 @@
 package de.pm.mindcloud.persistence.domain;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -14,12 +16,12 @@ public class MindMap {
 
     private String title;
 
-    //private List<Child> nodes = new ArrayList<Child>();
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Node> nodes = new ArrayList<>();
 
     public MindMap(String title) {
         this.title = title;
     }
-
 
     public String getTitle() {
         return title;
@@ -29,8 +31,16 @@ public class MindMap {
         this.title = title;
     }
 
-//    @Override
-//    public String toString() {
-//        return "{\"title\": \"" + title + "\", \"nodes\": " + Arrays.toString(nodes.toArray()) + "}";
-//    }
+    public List<Node> getNodes() {
+        return nodes;
+    }
+
+    public void setNodes(List<Node> nodes) {
+        this.nodes = nodes;
+    }
+
+    @Override
+    public String toString() {
+        return "{\"title\": \"" + title + "\", \"nodes\": " + Arrays.toString(nodes.toArray()) + "}";
+    }
 }
