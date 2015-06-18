@@ -12,7 +12,7 @@ import javax.persistence.Persistence;
 /**
  * Created by samuel on 09.05.15.
  */
-//@Configuration
+@Configuration
 public class EntityManagerConfig {
     private EntityManagerFactory emf;
 
