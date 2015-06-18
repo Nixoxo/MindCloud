@@ -1,5 +1,7 @@
 package de.pm.mindcloud.persistence.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -8,7 +10,12 @@ import java.util.List;
  * Created on 15/06/15
  * This class is responsible
  */
-public class Child {
+
+@Entity
+public class Child extends DomainObject {
+
+    @Id
+    private int id;
 
     private String title;
     private List<Child> childs = new ArrayList<Child>();
