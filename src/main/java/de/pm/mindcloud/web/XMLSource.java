@@ -1,8 +1,7 @@
-package de.pm.mindcloud.web.controller;
+package de.pm.mindcloud.web;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;

@@ -8,12 +8,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Source;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamSource;
-import java.io.IOException;
 
-import static de.pm.mindcloud.web.controller.XMLSource.*;
+import static de.pm.mindcloud.web.XMLSource.*;
 
 /**
  * Created by samuel on 17.06.15.
