@@ -18,23 +18,23 @@ public class Child extends DomainObject {
     private int id;
 
     private String title;
-    private List<Child> childs = new ArrayList<Child>();
+    //private List<Child> childs = new ArrayList<Child>();
 
     public Child(String title) {
         this.title = title;
     }
-
-    public void addChild(Child node) {
-        childs.add(node);
-    }
-
-    public List<Child> getChilds() {
-        return childs;
-    }
-
-    public void setChilds(List<Child> childs) {
-        this.childs = childs;
-    }
+//
+//    public void addChild(Child node) {
+//        childs.add(node);
+//    }
+//
+//    public List<Child> getChilds() {
+//        return childs;
+//    }
+//
+//    public void setChilds(List<Child> childs) {
+//        this.childs = childs;
+//    }
 
     public String getTitle() {
         return title;
@@ -45,8 +45,8 @@ public class Child extends DomainObject {
     }
 
 
-    @Override
-    public String toString() {
-        return "{\"title\": \"" + title + "\", \"childs\": " + Arrays.toString(childs.toArray()) + "}";
-    }
+//    @Override
+//    public String toString() {
+//        return "{\"title\": \"" + title + "\", \"childs\": " + Arrays.toString(childs.toArray()) + "}";
+//    }
 }

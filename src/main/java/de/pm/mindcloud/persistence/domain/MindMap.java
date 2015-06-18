@@ -12,19 +12,12 @@ public class MindMap {
 
     private String title;
 
-    private List<Child> nodes = new ArrayList<Child>();
+    //private List<Child> nodes = new ArrayList<Child>();
 
     public MindMap(String title) {
         this.title = title;
     }
 
-    public List<Child> getNodes() {
-        return nodes;
-    }
-
-    public void setNodes(List<Child> nodes) {
-        this.nodes = nodes;
-    }
 
     public String getTitle() {
         return title;
@@ -34,8 +27,8 @@ public class MindMap {
         this.title = title;
     }
 
-    @Override
-    public String toString() {
-        return "{\"title\": \"" + title + "\", \"nodes\": " + Arrays.toString(nodes.toArray()) + "}";
-    }
+//    @Override
+//    public String toString() {
+//        return "{\"title\": \"" + title + "\", \"nodes\": " + Arrays.toString(nodes.toArray()) + "}";
+//    }
 }
