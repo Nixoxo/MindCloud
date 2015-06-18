@@ -20,7 +20,7 @@ public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/").addInterceptors(new HttpSessionIdHandshakeInterceptor()).setAllowedOrigins("*").withSockJS();
+        registry.addEndpoint("/mindcloud").addInterceptors(new HttpSessionIdHandshakeInterceptor()).setAllowedOrigins("*").withSockJS();
     }
 
 //    @Override
