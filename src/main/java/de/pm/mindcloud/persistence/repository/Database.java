@@ -1,4 +1,4 @@
-package de.pm.mindcloud.persistence;
+package de.pm.mindcloud.persistence.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

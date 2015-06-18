@@ -1,4 +1,4 @@
-package de.pm.mindcloud.persistence;
+package de.pm.mindcloud.persistence.repository;
 
 import javax.persistence.Query;
 import java.util.List;
