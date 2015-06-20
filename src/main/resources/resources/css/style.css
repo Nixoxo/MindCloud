@@ -18,6 +18,11 @@ body {
 
 .navbar-inverse .navbar-nav > li > a:hover {
     background: #444;
+    color: #F0F0F0;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+    color: #F0F0F0;
 }
 
 .navbar-inverse .navbar-nav > li > a .glyphicon {
@@ -26,9 +31,113 @@ body {
     min-width: 20px;
 }
 
+.navbar-inverse .badge {
+    display: block;
+    position: absolute;
+    top: 8px;
+    right: 5px;
+    background-color: #D9534F;
+}
+
 .navbar-inverse .profile-thumbnail {
     float: left;
     height: 32px;
     width: 32px;
     margin: -6px 10px -6px 0;
+}
+
+.navbar-nav > li > .dropdown-menu {
+    border-radius: 0px;
+}
+
+.mindmap-editor {
+    position: fixed;
+    top: 50px;
+    right: 0;
+    bottom: 0;
+    left: 250px;
+}
+
+.mindmap-editor.disabled {
+    background-color: #ddd;
+}
+
+.mindmap-editor .navbar-nav > li > a {
+    padding: 10px;
+    color: #333;
+}
+
+.mindmap-editor .navbar-nav > li > a:hover {
+    background-color: #eeeeee;
+}
+
+.mindmap-editor .navbar {
+    border-radius: 0;
+    min-height: 0;
+}
+
+.mindmap-editor .navbar-text {
+    margin: 10px;
+    font-style: italic;
+}
+
+.dropdown-submenu {
+    position: relative;
+}
+
+.dropdown-submenu>.dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-top: -6px;
+    margin-left: -1px;
+    -webkit-border-radius: 0 6px 6px 6px;
+    -moz-border-radius: 0 6px 6px 6px;
+    border-radius: 0;
+}
+
+.dropdown-submenu:hover>.dropdown-menu {
+    display: block;
+}
+
+.dropdown-submenu>a:after {
+    display: block;
+    content: " ";
+    float: right;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
+    border-width: 5px 0 5px 5px;
+    border-left-color: #262626;
+    margin-top: 5px;
+    margin-right: -10px;
+}
+
+.dropdown-submenu.pull-left {
+    float: none;
+}
+
+.dropdown-submenu.pull-left>.dropdown-menu {
+    left: -100%;
+    margin-left: 10px;
+    -webkit-border-radius: 6px 0 6px 6px;
+    -moz-border-radius: 6px 0 6px 6px;
+    border-radius: 6px 0 6px 6px;
+}
+
+.mindmap-editor .mindmap {
+    position: fixed;
+    top: 90px;
+    right: 0;
+    bottom: 0;
+    left: 250px;
+}
+
+.notification {
+    position: fixed;
+    display: none;
+    top: 10%;
+    left: 50%;
+    z-index: 10000;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }

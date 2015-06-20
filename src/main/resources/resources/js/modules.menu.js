@@ -1,11 +1,17 @@
 mindcloud.modules.menu = {};
 (function (menu) {
     menu.init = function () {
-        $('[data-toggle="dropdown"]').hover(function (event) {
+        $('.navbar-inverse').find('[data-toggle="dropdown"]').hover(function (event) {
             if (!$(this).parent().hasClass('open')) {
-                console.log('toggle');
                 $(this).dropdown('toggle');
             }
+        });
+        $('.navbar-inverse').find('.navbar-nav').hover(undefined, function (event) {
+            $.each($(this).find('[data-toggle="dropdown"]'), function (index, dropdown) {
+                if ($(dropdown).parent().hasClass('open')) {
+                    $(dropdown).dropdown('toggle');
+                }
+            });
         });
         $('.nav-side-menu li').click(function (event) {
             $('.nav-side-menu li').removeClass('active');

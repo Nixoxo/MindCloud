@@ -11,18 +11,20 @@
     <link href="/css/style.css" rel="stylesheet" type="text/css" />
     <script src="/js/jquery-2.1.4.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/cytoscape.min.js"></script>
+    <script src="/js/cytoscape-cxtmenu.js"></script>
+    <script src="/js/engines/arbor.js"></script>
+    <script src="/js/engines/cola.v3.min.js"></script>
+    <script src="/js/engines/dagre.js"></script>
+    <script src="/js/engines/foograph.js"></script>
+    <script src="/js/engines/rhill-voronoi-core.js"></script>
+    <script src="/js/engines/springy.js"></script>
 </head>
 
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
                 <a class="navbar-brand" href="/">
                     <img alt="MindCloud" src="img/brand.png" /><span>MindCloud</span>
                 </a>
@@ -46,7 +48,7 @@
                         </ul>
                     </li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-envelope"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-envelope"></span><span class="badge">4</span></a>
                         <ul class="dropdown-menu">
                             <li><a href="#">Message 1</a>
                             </li>
@@ -71,8 +73,6 @@
                             </li>
                         </ul>
                     </li>
-                    <li><a href="#"><span class="glyphicon glyphicon-log-out"></span></a>
-                    </li>
                 </ul>
             </div>
         </div>
@@ -90,70 +90,135 @@
         <div class="menu-list">
 
             <ul class="menu-content">
-                <li>
-                    <a href="#">Dashboard</a>
+                <li data-toggle="collapse" data-target="#my-mindmaps" class="collapsed">
+                    <a href="#"><span>Meine Mindmaps</span> <span class="caret"></span></a>
                 </li>
-
-                <li data-toggle="collapse" data-target="#products" class="collapsed">
-                    <a href="#">UI Elements <span class="caret"></span></a>
-                </li>
-                <ul class="sub-menu collapse" id="products">
-                    <li><a href="#">CSS3 Animation</a>
+                <ul class="sub-menu collapse" id="my-mindmaps">
+                    <li><a href="#">Mindmap 1</a>
                     </li>
-                    <li><a href="#">General</a>
+                    <li><a href="#">Mindmap 2</a>
                     </li>
-                    <li><a href="#">Buttons</a>
+                    <li><a href="#">Mindmap 3</a>
                     </li>
-                    <li><a href="#">Tabs &amp; Accordions</a>
+                    <li><a href="#">Mindmap 4</a>
                     </li>
-                    <li><a href="#">Typography</a>
-                    </li>
-                    <li><a href="#">FontAwesome</a>
-                    </li>
-                    <li><a href="#">Slider</a>
-                    </li>
-                    <li><a href="#">Panels</a>
-                    </li>
-                    <li><a href="#">Widgets</a>
-                    </li>
-                    <li><a href="#">Bootstrap Model</a>
+                    <li><a href="#">Mindmap 5</a>
                     </li>
                 </ul>
 
-
-                <li data-toggle="collapse" data-target="#service" class="collapsed">
-                    <a href="#">Services <span class="caret"></span></a>
+                <li data-toggle="collapse" data-target="#shared-mindmaps" class="collapsed">
+                    <a href="#"><span>Geteilte Mindmaps</span> <span class="caret"></span></a>
                 </li>
-                <ul class="sub-menu collapse" id="service">
-                    <li>New Service 1</li>
-                    <li>New Service 2</li>
-                    <li>New Service 3</li>
+                <ul class="sub-menu collapse" id="shared-mindmaps">
+                    <li><a href="#">Mindmap 1</a>
+                    </li>
+                    <li><a href="#">Mindmap 2</a>
+                    </li>
+                    <li><a href="#">Mindmap 3</a>
+                    </li>
+                    <li><a href="#">Mindmap 4</a>
+                    </li>
+                    <li><a href="#">Mindmap 5</a>
+                    </li>
                 </ul>
-
-
-                <li data-toggle="collapse" data-target="#new" class="collapsed">
-                    <a href="#">New <span class="caret"></span></a>
+                <li data-toggle="collapse" data-target="#my-friends" class="collapsed">
+                    <a href="#"><span>Meine Freunde</span> <span class="caret"></span></a>
                 </li>
-                <ul class="sub-menu collapse" id="new">
-                    <li>New New 1</li>
-                    <li>New New 2</li>
-                    <li>New New 3</li>
+                <ul class="sub-menu collapse" id="my-friends">
+                    <li><a href="#">Freund 1</a>
+                    </li>
+                    <li><a href="#">Freund 2</a>
+                    </li>
+                    <li><a href="#">Freund 3</a>
+                    </li>
+                    <li><a href="#">Freund 4</a>
+                    </li>
+                    <li><a href="#">Freund 5</a>
+                    </li>
                 </ul>
-
-
-                <li>
-                    <a href="#">Profile</a>
-                </li>
-                <li>
-                    <a href="#">Users</a>
-                </li>
             </ul>
         </div>
     </div>
 
+    <div class="mindmap-editor">
+        <nav class="navbar navbar-default">
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Mindmap <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#"><span class="glyphicon glyphicon-share"></span> Freigeben</a>
+                        </li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#"><span class="glyphicon glyphicon-pencil"></span> Umbenennen</a>
+                        </li>
+                        <li><a href="#"><span class="glyphicon glyphicon-floppy-disk"></span> Speichern</a>
+                        </li>
+                        <li><a href="#"><span class="glyphicon glyphicon-copy"></span> Kopie erstellen</a>
+                        </li>
+                        <li><a href="#"><span class="glyphicon glyphicon-trash"></span> Löschen</a>
+                        </li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#"><span class="glyphicon glyphicon-cloud-download"></span> Exportieren</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Bearbeiten <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#"><span class="glyphicon glyphicon-circle-arrow-left"></span> Rückgängig</a>
+                        </li>
+                        <li><a href="#"><span class="glyphicon glyphicon-circle-arrow-right"></span> Wiederholen</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Ansicht <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Zoom</a>
+                        </li>
+                        <li class="dropdown dropdown-submenu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Level 2</a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="#">Link 3</a>
+                                </li>
+                                <li>
+                                    <a href="#">Link 3</a>
+                                </li>
+                                <li>
+                                    <a href="#">Link 3</a>
+                                </li>
+                                <li class="dropdown dropdown-submenu">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Level 3</a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a href="#">Link 3</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Link 3</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Link 3</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <p class="navbar-text navbar-right">Mindmapname</p>
+        </nav>
+        <div class="mindmap"></div>
+    </div>
+
     <script src="/js/mindcloud.js"></script>
+    <script src="/js/notify.js"></script>
+    <script src="/js/client.js"></script>
 
     <script src="/js/modules.menu.js"></script>
+    <script src="/js/modules.mindmap.js"></script>
+    <script src="/js/modules.editor.js"></script>
 
     <script src="/js/runtime.js"></script>
 
