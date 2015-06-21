@@ -42,9 +42,4 @@ public class NodeDAOTest {
         mindMapAccess.save(mindMap);
     }
 
-    @Test
-    public void deleteMindMap() throws Exception {
-        MindMap deleeMte = mindMapAccess.find(3);
-        mindMapAccess.delete(deleeMte);
-    }
 }
