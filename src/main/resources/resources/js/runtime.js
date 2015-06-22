@@ -1,3 +1,6 @@
+Array.prototype.contains = function (e) {
+    return this.indexOf(e) > -1;
+};
 var runtime = {};
 (function (runtime) {
     runtime.start = function () {
@@ -13,6 +16,7 @@ var runtime = {};
                 module.run();
             }
         });
+        mindcloud.started();
     };
 })(runtime);
 runtime.start();

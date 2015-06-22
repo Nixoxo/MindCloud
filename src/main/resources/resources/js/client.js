@@ -6,11 +6,12 @@ mindcloud.client = {};
         path: 'mindcloud'
     };
 
+    var socket;
     var actions = {};
 
     client.run = function () {
         var url = client.config.host + ':' + client.config.port + '/' + client.config.path;
-        var socket = new WebSocket('ws://' + url);
+        socket = new WebSocket('ws://' + url);
         if (socket == undefined) {
             necon.notify.warn('WebSockets werden in Ihrem Browser nicht unterstützt. Deshalb ist die Anwendung nicht vollständig benutzbar.');
             return;
@@ -49,9 +50,9 @@ mindcloud.client = {};
     }
 
     function onMessage(event) {
-        var message = JSON.parse(event.data);
+        var message = JSON.parse(event);
         console.log(message);
-        var action = message.requestAction;
+        var action = message.action;
         var data = message.response;
         var callbacks = actions[action];
         if (callbacks != undefined && $.isArray(callbacks)) {
@@ -60,4 +61,145 @@ mindcloud.client = {};
             }
         }
     }
+
+    client.invokeAction = function (action, data) {
+        var event = {
+            action: action,
+            data: data
+        };
+        console.log(event);
+        // socket.send(JSON.stringify(event));
+        // simulate result
+        if (action == 'getMindmapList') {
+            var response = [
+                {
+                    id: 1,
+                    name: 'Mindmap 1'
+                }, {
+                    id: 2,
+                    name: 'Mindmap 2'
+                }, {
+                    id: 3,
+                    name: 'Mindmap 3'
+                }, {
+                    id: 4,
+                    name: 'Mindmap 4'
+                }, {
+                    id: 5,
+                    name: 'Mindmap 5'
+                }
+            ];
+        } else if (action == 'getMindmap') {
+            var response = {
+                name: 'Test Mindmap',
+                nodes: [
+                    {
+                        data: {
+                            id: '1',
+                            title: 'Wissenschaftliches Schreiben',
+                            level: 0
+                        }
+                    },
+                    {
+                        data: {
+                            id: '2',
+                            title: 'Text Aufbau',
+                            level: 1
+                        }
+                    },
+                    {
+                        data: {
+                            id: '3',
+                            title: 'Satzkonstruktion / Wortwahl',
+                            level: 2
+                        }
+                    },
+                    {
+                        data: {
+                            id: '4',
+                            title: 'Literatur',
+                            level: 1
+                        }
+                    },
+                    {
+                        data: {
+                            id: '5',
+                            title: 'Quellenangabe/ Literaturverzeichnis',
+                            level: 2
+                        }
+                    },
+                    {
+                        data: {
+                            id: '6',
+                            title: 'Zitation',
+                            level: 1
+                        }
+                    },
+                    {
+                        data: {
+                            id: '7',
+                            title: 'direkt/ wörtlich',
+                            level: 2
+                        }
+                    },
+                    {
+                        data: {
+                            id: '8',
+                            title: 'indirekt / sinngemäß',
+                            level: 2
+                        }
+                    }
+                ],
+                edges: [
+                    {
+                        data: {
+                            source: '1',
+                            target: '2'
+                        }
+                    },
+                    {
+                        data: {
+                            source: '1',
+                            target: '4'
+                        }
+                    },
+                    {
+                        data: {
+                            source: '1',
+                            target: '6'
+                        }
+                    },
+                    {
+                        data: {
+                            source: '2',
+                            target: '3'
+                        }
+                    },
+                    {
+                        data: {
+                            source: '4',
+                            target: '5'
+                        }
+                    },
+                    {
+                        data: {
+                            source: '6',
+                            target: '7'
+                        }
+                    },
+                    {
+                        data: {
+                            source: '6',
+                            target: '8'
+                        }
+                    },
+                ]
+            };
+        }
+        var result = {
+            action: action,
+            response: response
+        };
+        onMessage(JSON.stringify(result));
+    };
 })(mindcloud.client);

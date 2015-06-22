@@ -50,37 +50,6 @@ body {
     border-radius: 0px;
 }
 
-.mindmap-editor {
-    position: fixed;
-    top: 50px;
-    right: 0;
-    bottom: 0;
-    left: 250px;
-}
-
-.mindmap-editor.disabled {
-    background-color: #ddd;
-}
-
-.mindmap-editor .navbar-nav > li > a {
-    padding: 10px;
-    color: #333;
-}
-
-.mindmap-editor .navbar-nav > li > a:hover {
-    background-color: #eeeeee;
-}
-
-.mindmap-editor .navbar {
-    border-radius: 0;
-    min-height: 0;
-}
-
-.mindmap-editor .navbar-text {
-    margin: 10px;
-    font-style: italic;
-}
-
 .dropdown-submenu {
     position: relative;
 }
@@ -125,12 +94,74 @@ body {
     border-radius: 6px 0 6px 6px;
 }
 
+.dropdown-menu > li > a {
+    position: relative;
+    padding-right: 70px;
+}
+
+.dropdown-menu > li > a.dropdown-toggle {
+    padding: 3px 20px;
+}
+
+.dropdown-menu > li > a > .text-muted {
+    position: absolute;
+    right: 20px;
+    top: 3px;
+}
+
+.mindmap-editor {
+    position: fixed;
+    top: 50px;
+    right: 0;
+    bottom: 0;
+    left: 250px;
+}
+
+.mindmap-editor.disabled {
+    background-color: #ddd;
+}
+
+.mindmap-editor .empty-message {
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    padding: 15%;
+}
+
+.mindmap-editor .navbar {
+    display: none;
+}
+
+.mindmap-editor .navbar-nav > li > a {
+    padding: 10px;
+    color: #333;
+}
+
+.mindmap-editor .navbar-nav > li > a:hover {
+    background-color: #eeeeee;
+}
+
+.mindmap-editor .navbar {
+    border-radius: 0;
+    min-height: 0;
+}
+
+.mindmap-editor .navbar-text {
+    margin: 10px;
+    font-style: italic;
+}
+
 .mindmap-editor .mindmap {
     position: fixed;
     top: 90px;
     right: 0;
     bottom: 0;
     left: 250px;
+}
+
+.modal-dialog {
+    margin: 10% auto;
 }
 
 .notification {

@@ -90,10 +90,10 @@
         <div class="menu-list">
 
             <ul class="menu-content">
-                <li data-toggle="collapse" data-target="#my-mindmaps" class="collapsed">
-                    <a href="#"><span>Meine Mindmaps</span> <span class="caret"></span></a>
+                <li class="search-results-header hidden">
+                    <a href="#"><span>Suchergebnisse</span> <span class="caret"></span></a>
                 </li>
-                <ul class="sub-menu collapse" id="my-mindmaps">
+                <ul class="search-results sub-menu hidden">
                     <li><a href="#">Mindmap 1</a>
                     </li>
                     <li><a href="#">Mindmap 2</a>
@@ -106,23 +106,16 @@
                     </li>
                 </ul>
 
-                <li data-toggle="collapse" data-target="#shared-mindmaps" class="collapsed">
-                    <a href="#"><span>Geteilte Mindmaps</span> <span class="caret"></span></a>
+                <li data-toggle="collapse" data-target="#my-mindmaps" aria-expanded="true">
+                    <a href="#"><span class="glyphicon glyphicon-th-list"></span> Meine Mindmaps <span class="caret"></span></a>
                 </li>
-                <ul class="sub-menu collapse" id="shared-mindmaps">
-                    <li><a href="#">Mindmap 1</a>
-                    </li>
-                    <li><a href="#">Mindmap 2</a>
-                    </li>
-                    <li><a href="#">Mindmap 3</a>
-                    </li>
-                    <li><a href="#">Mindmap 4</a>
-                    </li>
-                    <li><a href="#">Mindmap 5</a>
-                    </li>
+                <ul class="sub-menu collapse in" id="my-mindmaps">
                 </ul>
+                <li id="create-mindmap">
+                    <a href="#"><span class="glyphicon glyphicon-plus-sign"></span> Neue Mindmap</a>
+                </li>
                 <li data-toggle="collapse" data-target="#my-friends" class="collapsed">
-                    <a href="#"><span>Meine Freunde</span> <span class="caret"></span></a>
+                    <a href="#"><span class="glyphicon glyphicon-user"></span> Meine Freunde<span class="caret"></span></a>
                 </li>
                 <ul class="sub-menu collapse" id="my-friends">
                     <li><a href="#">Freund 1</a>
@@ -151,14 +144,14 @@
                         <li role="separator" class="divider"></li>
                         <li><a href="#"><span class="glyphicon glyphicon-pencil"></span> Umbenennen</a>
                         </li>
-                        <li><a href="#"><span class="glyphicon glyphicon-floppy-disk"></span> Speichern</a>
-                        </li>
-                        <li><a href="#"><span class="glyphicon glyphicon-copy"></span> Kopie erstellen</a>
+                        <li><a href="#"><span class="glyphicon glyphicon-floppy-disk"></span> Speichern<span class="text-muted">Strg + S</span></a>
                         </li>
                         <li><a href="#"><span class="glyphicon glyphicon-trash"></span> Löschen</a>
                         </li>
                         <li role="separator" class="divider"></li>
                         <li><a href="#"><span class="glyphicon glyphicon-cloud-download"></span> Exportieren</a>
+                        </li>
+                        <li><a href="#"><span class="glyphicon glyphicon-picture"></span> Als Bild exportieren</a>
                         </li>
                     </ul>
                 </li>
@@ -207,14 +200,17 @@
                     </ul>
                 </li>
             </ul>
-            <p class="navbar-text navbar-right">Mindmapname</p>
+            <p class="mindmap-name navbar-text navbar-right"></p>
         </nav>
-        <div class="mindmap"></div>
+        <div class="mindmap">
+        </div>
+        <div class="empty-message">Bitte Mindmap zum Anzeigen links auswählen!</div>
     </div>
 
     <script src="/js/mindcloud.js"></script>
     <script src="/js/notify.js"></script>
     <script src="/js/client.js"></script>
+    <script src="/js/ui.js"></script>
 
     <script src="/js/modules.menu.js"></script>
     <script src="/js/modules.mindmap.js"></script>
