@@ -158,9 +158,9 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Bearbeiten <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#"><span class="glyphicon glyphicon-circle-arrow-left"></span> Rückgängig</a>
+                        <li><a id="editor-step-backwards" href="#"><span class="glyphicon glyphicon-circle-arrow-left"></span> Rückgängig<span class="text-muted">Strg + Z</span></a>
                         </li>
-                        <li><a href="#"><span class="glyphicon glyphicon-circle-arrow-right"></span> Wiederholen</a>
+                        <li><a id="editor-step-forward" href="#"><span class="glyphicon glyphicon-circle-arrow-right"></span> Wiederholen<span class="text-muted">Strg + Y</span></a>
                         </li>
                     </ul>
                 </li>
@@ -211,6 +211,7 @@
     <script src="/js/notify.js"></script>
     <script src="/js/client.js"></script>
     <script src="/js/ui.js"></script>
+    <script src="/js/mindmap.cache.js"></script>
 
     <script src="/js/modules.menu.js"></script>
     <script src="/js/modules.mindmap.js"></script>

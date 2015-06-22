@@ -23,15 +23,7 @@ mindcloud.modules.menu = {};
 
     menu.run = function () {
         $('#create-mindmap').click(function (event) {
-            mindcloud.ui.showInputDialog('Mindmap erstellen', 'Name eingeben...', undefined, function (event) {
-                if (event.action == 'ok') {
-                    if (event.input.length == 0) {
-                        mindcloud.notify.error('Der Name der Mindmap darf nicht leer sein!');
-                    } else {
-                        mindcloud.modules.editor.createMindmap(event.input);
-                    }
-                }
-            });
+            mindcloud.modules.editor.createMindmap();
         });
         mindcloud.client.registerAction('getMindmapList', menu.setMindmapList);
     };

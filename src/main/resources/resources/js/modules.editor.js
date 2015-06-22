@@ -2,7 +2,6 @@ mindcloud.modules.editor = {};
 (function (editor) {
     var editorPanel;
     var menuPanel;
-    var editingMindmap;
 
     editor.init = function () {
         editorPanel = $('.mindmap-editor');
@@ -24,28 +23,40 @@ mindcloud.modules.editor = {};
     };
 
     editor.run = function () {
+        // TODO init menu items
+        $('#editor-step-backwards').click(function (event) {
+            event.preventDefault();
+            if (mindcloud.cache.isStepBackwardsAvailable()) {
+                mindcloud.cache.stepBackwards();
+                editor.refreshMindmap();
+            }
+        });
+        $('#editor-step-forward').click(function (event) {
+            event.preventDefault();
+            if (mindcloud.cache.isStepForwardAvailable()) {
+                mindcloud.cache.stepForward();
+                editor.refreshMindmap();
+            }
+        });
         editor.setMindmap();
-        mindcloud.client.registerAction('getMindmap', editor.setMindmap)
+        mindcloud.client.registerAction('getMindmap', editor.setMindmap);
     };
 
-    editor.createMindmap = function (name) {
-        var mindmap = {
-            name: name,
-            nodes: [
-                {
-                    data: {
-                        id: mindcloud.generateUUID(),
-                        title: name,
-                        level: 0
-                    }
+    editor.createMindmap = function () {
+        mindcloud.ui.showInputDialog('Mindmap erstellen', 'Name eingeben...', undefined, function (event) {
+            if (event.action == 'ok') {
+                if (event.input.length == 0) {
+                    mindcloud.notify.error('Der Name der Mindmap darf nicht leer sein!');
+                } else {
+                    mindcloud.cache.createMindmap(event.input);
+                    editor.refreshMindmap();
                 }
-            ],
-            edges: []
-        };
-        editor.setMindmap(mindmap);
+            }
+        });
     };
 
     editor.setMindmap = function (mindmap) {
+        mindcloud.cache.setMindmap(mindmap);
         if (mindmap == undefined) {
             editorPanel.addClass('disabled');
             editorPanel.find('.empty-message').show();
@@ -55,8 +66,13 @@ mindcloud.modules.editor = {};
             editorPanel.find('.empty-message').hide();
             menuPanel.show();
             menuPanel.find('.mindmap-name').html(mindmap.name);
-            editingMindmap = mindmap;
         }
+        mindcloud.modules.mindmap.set(mindmap);
+    };
+
+    editor.refreshMindmap = function () {
+        var mindmap = mindcloud.cache.getMindmap();
+        menuPanel.find('.mindmap-name').html(mindmap.name);
         mindcloud.modules.mindmap.set(mindmap);
     };
 
@@ -66,30 +82,12 @@ mindcloud.modules.editor = {};
                 if (event.input.length == 0) {
                     mindcloud.notify.error('Der Nodetext darf nicht leer sein!');
                 } else {
-                    createNode(node, event.input);
+                    mindcloud.cache.addNode(node, event.input);
+                    editor.refreshMindmap();
                 }
             }
         });
     };
-
-    function createNode(parent, text) {
-        var node = {
-            data: {
-                id: mindcloud.generateUUID(),
-                title: text,
-                level: parent.level + 1
-            }
-        };
-        var edge = {
-            data: {
-                source: parent.data.id,
-                target: node.data.id
-            }
-        };
-        editingMindmap.nodes.push(node);
-        editingMindmap.edges.push(edge);
-        editor.setMindmap(editingMindmap);
-    }
 
     editor.removeNode = function (node) {
         if (node.data.level == 0) {
@@ -100,48 +98,11 @@ mindcloud.modules.editor = {};
             'Sind Sie sicher, dass Sie den Knoten "' + node.data.title + '" und alle Unterknoten löschen wollen?',
             function (event) {
                 if (event.action == 'yes') {
-                    removeNodeAndChilds(mode);
+                    mindcloud.cache.removeNode(node);
+                    editor.refreshMindmap();
                 }
             });
     };
-
-    function removeNodeAndCHilds(node) {
-        var idsToRemove = getDeleteIdsForId(node.data.id);
-        for (var i = 0; i < editingMindmap.nodes.length; i++) {
-            var n = editingMindmap.nodes[i];
-            if (idsToRemove.contains(n.data.id)) {
-                editingMindmap.nodes.splice(i, 1);
-                i--;
-            }
-        }
-        for (var i = 0; i < editingMindmap.edges.length; i++) {
-            var e = editingMindmap.edges[i];
-            if (idsToRemove.contains(e.data.target)) {
-                editingMindmap.edges.splice(i, 1);
-                i--;
-            }
-        }
-        editor.setMindmap(editingMindmap);
-    }
-
-    function getDeleteIdsForId(id) {
-        var ids = [];
-        for (var i = 0; i < editingMindmap.edges.length; i++) {
-            var edge = editingMindmap.edges[i].data;
-            if (edge.source == id) {
-                var childIds = getDeleteIdsForId(edge.target);
-                for (var j = 0; j < childIds.length; j++) {
-                    if (!ids.contains(childIds[j])) {
-                        ids.push(childIds[j]);
-                    }
-                }
-            }
-            if (edge.target == id && !ids.contains(edge.target)) {
-                ids.push(edge.target);
-            }
-        }
-        return ids;
-    }
 
     editor.editNode = function (node) {
         mindcloud.ui.showInputDialog('Node ändern', 'Text eingeben...', node.data.title, function (event) {
@@ -149,13 +110,8 @@ mindcloud.modules.editor = {};
                 if (event.input.length == 0) {
                     mindcloud.notify.error('Der Nodetext darf nicht leer sein!');
                 } else {
-                    for (var i = 0; i < editingMindmap.nodes.length; i++) {
-                        var n = editingMindmap.nodes[i];
-                        if (n.data.id == node.data.id) {
-                            n.data.title = event.input;
-                        }
-                    }
-                    editor.setMindmap(editingMindmap);
+                    mindcloud.cache.editNode(node, event.input);
+                    editor.refreshMindmap();
                 }
             }
         });
