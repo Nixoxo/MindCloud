@@ -77,7 +77,7 @@ mindcloud.client = {};
             socketInitEvents.push(event);
         }
         // simulate result
-        if (action == 'getMindmapList') {
+        if (action == 'getMindmapList'|| action == 'searchMindmapList') {
             var response = [
                 {
                     id: 1,

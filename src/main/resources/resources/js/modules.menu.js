@@ -19,6 +19,17 @@ mindcloud.modules.menu = {};
                     $(this).addClass('active');
                 });
         */
+        $('#searchInput').keyup(function (event){
+            var input = $(this).val();
+            if (input.length > 2) {
+                //$('#search-results').show();
+                mindcloud.client.invokeAction('searchMindmapList', {
+                    'name': input
+                });
+            }
+            //else
+                //$('#search-results').hide();
+        });
     };
 
     menu.run = function () {
@@ -26,6 +37,7 @@ mindcloud.modules.menu = {};
             mindcloud.modules.editor.createMindmap();
         });
         mindcloud.client.registerAction('getMindmapList', menu.setMindmapList);
+        mindcloud.client.registerAction('searchMindmapList', menu.setSearchList)
     };
 
     menu.setMindmapList = function (list) {
@@ -40,5 +52,20 @@ mindcloud.modules.menu = {};
                 });
             }).html(item.name).appendTo(listPanel);
         });
+    };
+
+    menu.setSearchList = function (list) {
+        var listPanel = $('#search-results');
+        listPanel.empty();
+        $.each(list,function (index, item){
+            $('<li>').attr({
+                'id': item.id
+            }).click(function (event) {
+                mindcloud.client.invokeAction('getMindmap',{
+                    id: item.id
+                });
+            }).html(item.name).appendTo(listPanel);
+        })
     }
+
 })(mindcloud.modules.menu);

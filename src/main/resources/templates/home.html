@@ -81,30 +81,20 @@
 
     <div class="nav-side-menu">
 
-        <form class="menu-search">
+        <div class="menu-search">
             <div class="form-group has-feedback">
-                <input type="text" class="form-control" id="exampleInputAmount" placeholder="Suchen..." />
+                <input type="text" class="form-control" id="searchInput" placeholder="Suchen..." />
                 <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
             </div>
-        </form>
+        </div>
 
         <div class="menu-list">
 
             <ul class="menu-content">
-                <li class="search-results-header hidden">
+                <li data-toggle="collapse" data-target="#search-results" aria-expanded="true" class="search-results-header">
                     <a href="#"><span>Suchergebnisse</span> <span class="caret"></span></a>
                 </li>
-                <ul class="search-results sub-menu hidden">
-                    <li><a href="#">Mindmap 1</a>
-                    </li>
-                    <li><a href="#">Mindmap 2</a>
-                    </li>
-                    <li><a href="#">Mindmap 3</a>
-                    </li>
-                    <li><a href="#">Mindmap 4</a>
-                    </li>
-                    <li><a href="#">Mindmap 5</a>
-                    </li>
+                <ul class="search-results sub-menu" id="search-results">
                 </ul>
 
                 <li data-toggle="collapse" data-target="#my-mindmaps" aria-expanded="true">
