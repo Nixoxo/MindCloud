@@ -194,7 +194,7 @@ mindcloud.modules.editor = {};
     }
 
     function exportMindmapAsImage() {
-        mindcloud.ui.showImageExportDialog('Mindmap ans Bild exportieren', function (event) {
+        mindcloud.ui.showImageExportDialog('Mindmap als Bild exportieren', function (event) {
             if (event.action == 'ok') {
                 var image = mindcloud.modules.mindmap.getImage(event.options);
                 var name = mindcloud.cache.getMindmap().name + '.png';

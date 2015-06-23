@@ -3,6 +3,12 @@ body {
     padding: 0;
 }
 
+a:hover,
+a:active,
+a:focus {
+    outline: 0;
+}
+
 .navbar-brand img {
     display: inline-block;
     margin-top: -5px;
@@ -173,17 +179,42 @@ body {
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 
-#profil_container{
+.bold {
+    font-weight: bold;
+}
+
+.colorpicker .colorpicker-saturation {
+    width: 150px;
+    height: 150px;
+}
+
+.colorpicker .colorpicker-hue,
+.colorpicker .colorpicker-alpha {
+    width: 22.5px;
+    height: 150px;
+}
+
+.colorpicker .colorpicker-color,
+.colorpicker .colorpicker-color div {
+    height: 22.5px;
+}
+
+.colorpicker-element .input-group-addon i {
+    border: 1px solid #999;
+}
+
+#profil_container {
     min-height: 460px;
     position: absolute;
-    display:block;
-    top: 5px;
+    display: block;
+    top: 50px;
     width: 30%;
     right: -20px;
     height: 50%;
     background: #fff;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
+
 .profile-sidebar {
     padding: 20px 0 10px 0;
     position: relative;
@@ -257,8 +288,8 @@ body {
     border-left: 2px solid #5b9bd1;
     margin-left: -2px;
 }
-
 /* Profile Content */
+
 .profile-content {
     position: relative;
     padding: 20px;

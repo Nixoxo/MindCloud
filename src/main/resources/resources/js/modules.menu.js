@@ -32,22 +32,24 @@ mindcloud.modules.menu = {};
         });
 
         $('#profile_dropdown').mouseenter(function (event) {
-           if ($('#profil_container').is(":visible"))
+            if ($('#profil_container').is(":visible"))
                 $('#profil_container').hide();
-           else
+            else
                 $('#profil_container').show();
         });
-
         $('#searchInput').keyup(function (event) {
+            if (event.keyCode == 13 || event.keyCode == 27) {
+                $(this).val('');
+            }
             var input = $(this).val();
-            if (input.length > 2) {
-                //$('#search-results').show();
+            if (input.length > 0) {
                 mindcloud.client.invokeAction('searchMindmapList', {
-                    'name': input
+                    'search': input
                 });
-            };
-            //else
-            //$('#search-results').hide();
+            } else {
+                $('#search-results-header').addClass('hidden');
+                $('#search-results').addClass('hidden');
+            }
         });
         mindcloud.client.registerAction('getMindmapList', menu.setMindmapList);
         mindcloud.client.registerAction('searchMindmapList', menu.setSearchList)
@@ -68,7 +70,9 @@ mindcloud.modules.menu = {};
     };
 
     menu.setSearchList = function (list) {
+        $('#search-results-header').removeClass('hidden');
         var listPanel = $('#search-results');
+        listPanel.removeClass('hidden');
         listPanel.empty();
         $.each(list, function (index, item) {
             $('<li>').attr({

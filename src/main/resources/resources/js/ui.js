@@ -73,12 +73,34 @@ mindcloud.ui = {};
     ui.showImageExportDialog = function (title, callback) {
         dialog.find('.modal-dialog').removeClass('modal-sm');
         dialog.find('.modal-title').html(title);
-        var body = '<div class="radio"><label><input type="radio"> *.png</label></div>';
+        var format = '<p class="bold">Dateiformat:</p><div class="radio"><label><input name="format" value="png" type="radio" checked> *.png</label></div><div class="radio"><label><input name="format" value="jpg" type="radio"> *.jpg</label></div>';
+        var background = '<p class="bold">Hintergrundfarbe:</p><div id="export-image-background-color" class="input-group"><input type="text" value="transparent" class="form-control" /><span class="input-group-addon"><i></i></span></div>';
+        var viewOnly = '<p class="bold">Größe:</p><div class="checkbox"><label><input name="full" value="full" type="checkbox"> Nur Anzeigtes verwenden</label></div><div class="input-group"><label>Skalierungsfaktor: </label><input type="number" value="1" min="1" step="any" class="form-control" /></div>';
+        var body = format + background + viewOnly;
         dialog.find('.modal-body').html(body);
+        dialog.find('#export-image-background-color').colorpicker({
+            sliders: {
+                saturation: {
+                    maxLeft: 150,
+                    maxTop: 150
+                },
+                hue: {
+                    maxTop: 150
+                },
+                alpha: {
+                    maxTop: 150
+                }
+            }
+        });
         dialog.find('.confirm').html('OK').off("click").click(function (event) {
             callback.call(this, {
                 action: 'ok',
-                options: {}
+                options: {
+                    format: dialog.find('input[name="format"]:checked').val(),
+                    bg: dialog.find('#export-image-background-color').data('colorpicker').color,
+                    full: !dialog.find('input[name="full"]').is(':checked'),
+                    scale: dialog.find('input[type="number"]').val()
+                }
             });
             dialog.modal('hide');
         });
