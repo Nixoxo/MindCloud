@@ -49,7 +49,6 @@ mindcloud.cache = {};
         }
     };
 
-
     function pushNewVersion(mindmap) {
         timeIndex++;
         if (timeIndex < history.length) {

@@ -23,7 +23,6 @@ mindcloud.modules.editor = {};
     };
 
     editor.run = function () {
-        // TODO init menu items
         registerMenuAction('editor-step-backwards', function () {
             if (mindcloud.cache.isStepBackwardsAvailable()) {
                 mindcloud.cache.stepBackwards();
@@ -47,6 +46,12 @@ mindcloud.modules.editor = {};
         })
         registerMenuAction('editor-rename', function () {
             renameMindmap();
+        });
+        registerMenuAction('editor-export', function () {
+            exportMindmapAsJson();
+        });
+        registerMenuAction('editor-export-image', function () {
+            exportMindmapAsImage();
         });
         editor.setMindmap();
         mindcloud.client.registerAction('getMindmap', editor.setMindmap);
@@ -179,5 +184,36 @@ mindcloud.modules.editor = {};
                 editor.refreshMindmap();
             }
         });
+    }
+
+    function exportMindmapAsJson() {
+        var mindmap = mindcloud.cache.getMindmap();
+        var content = 'data:text/json,' + JSON.stringify(mindmap);
+        var name = mindmap.name + '.mc';
+        saveFile(name, content);
+    }
+
+    function exportMindmapAsImage() {
+        mindcloud.ui.showImageExportDialog('Mindmap ans Bild exportieren', function (event) {
+            if (event.action == 'ok') {
+                var image = mindcloud.modules.mindmap.getImage(event.options);
+                var name = mindcloud.cache.getMindmap().name + '.png';
+                if (event.options.format == 'jpg') {
+                    name = name.replace(/png/g, 'jpg');
+                }
+                saveFile(name, image);
+            }
+        });
+    }
+
+    function saveFile(name, content) {
+        var link = $('<a>').attr({
+            'href': content,
+            'download': name
+        }).css({
+            'display': 'node'
+        }).appendTo('body');
+        link.get(0).click();
+        link.remove();
     }
 })(mindcloud.modules.editor);

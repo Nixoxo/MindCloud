@@ -19,7 +19,13 @@ mindcloud.modules.menu = {};
                     $(this).addClass('active');
                 });
         */
-        $('#searchInput').keyup(function (event){
+    };
+
+    menu.run = function () {
+        $('#create-mindmap').click(function (event) {
+            mindcloud.modules.editor.createMindmap();
+        });
+        $('#searchInput').keyup(function (event) {
             var input = $(this).val();
             if (input.length > 2) {
                 //$('#search-results').show();
@@ -28,13 +34,7 @@ mindcloud.modules.menu = {};
                 });
             }
             //else
-                //$('#search-results').hide();
-        });
-    };
-
-    menu.run = function () {
-        $('#create-mindmap').click(function (event) {
-            mindcloud.modules.editor.createMindmap();
+            //$('#search-results').hide();
         });
         mindcloud.client.registerAction('getMindmapList', menu.setMindmapList);
         mindcloud.client.registerAction('searchMindmapList', menu.setSearchList)
@@ -57,11 +57,11 @@ mindcloud.modules.menu = {};
     menu.setSearchList = function (list) {
         var listPanel = $('#search-results');
         listPanel.empty();
-        $.each(list,function (index, item){
+        $.each(list, function (index, item) {
             $('<li>').attr({
                 'id': item.id
             }).click(function (event) {
-                mindcloud.client.invokeAction('getMindmap',{
+                mindcloud.client.invokeAction('getMindmap', {
                     id: item.id
                 });
             }).html(item.name).appendTo(listPanel);

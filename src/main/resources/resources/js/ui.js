@@ -69,4 +69,25 @@ mindcloud.ui = {};
         });
         dialog.modal('show');
     };
+
+    ui.showImageExportDialog = function (title, callback) {
+        dialog.find('.modal-dialog').removeClass('modal-sm');
+        dialog.find('.modal-title').html(title);
+        var body = '<div class="radio"><label><input type="radio"> *.png</label></div>';
+        dialog.find('.modal-body').html(body);
+        dialog.find('.confirm').html('OK').off("click").click(function (event) {
+            callback.call(this, {
+                action: 'ok',
+                options: {}
+            });
+            dialog.modal('hide');
+        });
+        dialog.find('.cancel').html('Abbrechen').off("click").click(function (event) {
+            callback.call(this, {
+                action: 'cancel'
+            });
+            dialog.modal('hide');
+        });
+        dialog.modal('show');
+    };
 })(mindcloud.ui);

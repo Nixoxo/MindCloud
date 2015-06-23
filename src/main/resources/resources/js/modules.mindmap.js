@@ -128,4 +128,11 @@ mindcloud.modules.mindmap = {};
             }
         });
     };
+
+    mindmap.getImage = function (options) {
+        if (options == undefined || options.format == 'jpg') {
+            return cy.jpg(options);
+        }
+        return cy.png(options);
+    };
 })(mindcloud.modules.mindmap);
