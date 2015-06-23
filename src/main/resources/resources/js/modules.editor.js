@@ -24,22 +24,64 @@ mindcloud.modules.editor = {};
 
     editor.run = function () {
         // TODO init menu items
-        $('#editor-step-backwards').click(function (event) {
-            event.preventDefault();
+        registerMenuAction('editor-step-backwards', function () {
             if (mindcloud.cache.isStepBackwardsAvailable()) {
                 mindcloud.cache.stepBackwards();
                 editor.refreshMindmap();
+                refreshMenuState();
             }
         });
-        $('#editor-step-forward').click(function (event) {
-            event.preventDefault();
+        registerMenuAction('editor-step-forward', function () {
             if (mindcloud.cache.isStepForwardAvailable()) {
                 mindcloud.cache.stepForward();
                 editor.refreshMindmap();
+                refreshMenuState();
             }
+        });
+        registerMenuAction('editor-save', function () {
+            mindcloud.client.invokeAction('saveMindmap', mindcloud.cache.getMindmap());
         });
         editor.setMindmap();
         mindcloud.client.registerAction('getMindmap', editor.setMindmap);
+        mindcloud.client.registerAction('saveMindmap', editor.setMindmap);
+    };
+
+    function registerMenuAction(id, callback, enabled) {
+        var item = $('#' + id);
+        item.click(function (event) {
+            event.preventDefault();
+            if (isMenuActionEnabled(id)) {
+                callback.call(this);
+            }
+        });
+        var shortcut = item.find('.text-muted').html();
+        shortcut = shortcut.toLowerCase().replace(/ /g, '').replace(/strg/g, 'ctrl');
+        $(document).bind('keydown', shortcut, function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+            if (editor.isEnabled() && isMenuActionEnabled(id)) {
+                callback.call(this);
+            }
+        });
+        if (enabled != undefined) {
+            setMenuActionEnabled(id, enabled);
+        }
+    }
+
+    function setMenuActionEnabled(id, enabled) {
+        if (enabled) {
+            $('#' + id).parent().removeClass('disabled');
+        } else {
+            $('#' + id).parent().addClass('disabled');
+        }
+    }
+
+    function isMenuActionEnabled(id) {
+        return !$('#' + id).parent().hasClass('disabled');
+    }
+
+    editor.isEnabled = function () {
+        return !editorPanel.hasClass('disabled');
     };
 
     editor.createMindmap = function () {
@@ -49,7 +91,7 @@ mindcloud.modules.editor = {};
                     mindcloud.notify.error('Der Name der Mindmap darf nicht leer sein!');
                 } else {
                     mindcloud.cache.createMindmap(event.input);
-                    editor.refreshMindmap();
+                    editor.setMindmap(mindcloud.cache.getMindmap());
                 }
             }
         });
@@ -66,14 +108,21 @@ mindcloud.modules.editor = {};
             editorPanel.find('.empty-message').hide();
             menuPanel.show();
             menuPanel.find('.mindmap-name').html(mindmap.name);
+            refreshMenuState();
         }
         mindcloud.modules.mindmap.set(mindmap);
     };
+
+    function refreshMenuState() {
+        setMenuActionEnabled('editor-step-backwards', mindcloud.cache.isStepBackwardsAvailable());
+        setMenuActionEnabled('editor-step-forward', mindcloud.cache.isStepForwardAvailable());
+    }
 
     editor.refreshMindmap = function () {
         var mindmap = mindcloud.cache.getMindmap();
         menuPanel.find('.mindmap-name').html(mindmap.name);
         mindcloud.modules.mindmap.set(mindmap);
+        refreshMenuState();
     };
 
     editor.addNode = function (node) {

@@ -77,7 +77,7 @@ mindcloud.client = {};
             socketInitEvents.push(event);
         }
         // simulate result
-        /*if (action == 'getMindmapList') {
+        if (action == 'getMindmapList') {
             var response = [
                 {
                     id: 1,
@@ -96,7 +96,7 @@ mindcloud.client = {};
                     name: 'Mindmap 5'
                 }
             ];
-        } else if (action == 'getMindmap') {
+        } else if (action == 'getMindmap' || action == 'saveMindmap') {
             var response = {
                 name: 'Test Mindmap',
                 nodes: [
@@ -207,6 +207,6 @@ mindcloud.client = {};
             action: action,
             response: response
         };
-        onMessage(JSON.stringify(result));*/
+        onMessage(JSON.stringify(result));
     };
 })(mindcloud.client);
