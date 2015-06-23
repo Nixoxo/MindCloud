@@ -41,12 +41,19 @@ mindcloud.modules.editor = {};
         registerMenuAction('editor-save', function () {
             mindcloud.client.invokeAction('saveMindmap', mindcloud.cache.getMindmap());
         });
+        $('.mindmap-name').click(function (event) {
+            event.preventDefault();
+            renameMindmap();
+        })
+        registerMenuAction('editor-rename', function () {
+            renameMindmap();
+        });
         editor.setMindmap();
         mindcloud.client.registerAction('getMindmap', editor.setMindmap);
         mindcloud.client.registerAction('saveMindmap', editor.setMindmap);
     };
 
-    function registerMenuAction(id, callback, enabled) {
+    function registerMenuAction(id, callback) {
         var item = $('#' + id);
         item.click(function (event) {
             event.preventDefault();
@@ -55,16 +62,15 @@ mindcloud.modules.editor = {};
             }
         });
         var shortcut = item.find('.text-muted').html();
-        shortcut = shortcut.toLowerCase().replace(/ /g, '').replace(/strg/g, 'ctrl');
-        $(document).bind('keydown', shortcut, function (event) {
-            event.preventDefault();
-            event.stopPropagation();
-            if (editor.isEnabled() && isMenuActionEnabled(id)) {
-                callback.call(this);
-            }
-        });
-        if (enabled != undefined) {
-            setMenuActionEnabled(id, enabled);
+        if (shortcut != undefined) {
+            shortcut = shortcut.toLowerCase().replace(/ /g, '').replace(/strg/g, 'ctrl');
+            $(document).bind('keydown', shortcut, function (event) {
+                event.preventDefault();
+                event.stopPropagation();
+                if (editor.isEnabled() && isMenuActionEnabled(id)) {
+                    callback.call(this);
+                }
+            });
         }
     }
 
@@ -165,4 +171,13 @@ mindcloud.modules.editor = {};
             }
         });
     };
+
+    function renameMindmap() {
+        mindcloud.ui.showInputDialog('Mindmap umbenennen', 'Name eingeben...', mindcloud.cache.getMindmap().name, function (event) {
+            if (event.action == 'ok') {
+                mindcloud.cache.setMindmapName(event.input);
+                editor.refreshMindmap();
+            }
+        });
+    }
 })(mindcloud.modules.editor);

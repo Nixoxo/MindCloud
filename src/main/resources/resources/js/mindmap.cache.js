@@ -132,4 +132,9 @@ mindcloud.cache = {};
         return ids;
     }
 
+    cache.setMindmapName = function (name) {
+        var mindmap = getCurrentMindmapClone();
+        mindmap.name = name;
+        pushNewVersion(mindmap);
+    };
 })(mindcloud.cache);
