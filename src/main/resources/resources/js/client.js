@@ -7,6 +7,7 @@ mindcloud.client = {};
     };
 
     var socket;
+    var socketInitEvents = [];
     var actions = {};
 
     client.run = function () {
@@ -38,7 +39,9 @@ mindcloud.client = {};
     };
 
     function onOpen() {
-
+        for (var i = 0; i < socketInitEvents.length; i++) {
+            socket.send(JSON.stringify(socketInitEvents[i]));
+        }
     }
 
     function onClose() {
@@ -68,9 +71,13 @@ mindcloud.client = {};
             data: data
         };
         console.log(event);
-        // socket.send(JSON.stringify(event));
+        if (socket.readyState == WebSocket.OPEN) {
+            socket.send(JSON.stringify(event));
+        } else {
+            socketInitEvents.push(event);
+        }
         // simulate result
-        if (action == 'getMindmapList') {
+        /*if (action == 'getMindmapList') {
             var response = [
                 {
                     id: 1,
@@ -200,6 +207,6 @@ mindcloud.client = {};
             action: action,
             response: response
         };
-        onMessage(JSON.stringify(result));
+        onMessage(JSON.stringify(result));*/
     };
 })(mindcloud.client);
