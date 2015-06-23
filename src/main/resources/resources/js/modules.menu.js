@@ -13,6 +13,11 @@ mindcloud.modules.menu = {};
                 }
             });
         });
+
+        $('#profile_menu a').click(function (event) {
+            $('.profile-content').children().hide();
+            $('.profile-content').children().eq($('#profile_menu a').index(this)).show();
+        });
         /*
                 $('.nav-side-menu li').click(function (event) {
                     $('.nav-side-menu li').removeClass('active');
@@ -25,6 +30,14 @@ mindcloud.modules.menu = {};
         $('#create-mindmap').click(function (event) {
             mindcloud.modules.editor.createMindmap();
         });
+
+        $('#profile_dropdown').mouseenter(function (event) {
+           if ($('#profil_container').is(":visible"))
+                $('#profil_container').hide();
+           else
+                $('#profil_container').show();
+        });
+
         $('#searchInput').keyup(function (event) {
             var input = $(this).val();
             if (input.length > 2) {
@@ -32,7 +45,7 @@ mindcloud.modules.menu = {};
                 mindcloud.client.invokeAction('searchMindmapList', {
                     'name': input
                 });
-            }
+            };
             //else
             //$('#search-results').hide();
         });

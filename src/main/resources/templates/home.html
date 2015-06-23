@@ -64,15 +64,8 @@
                         </ul>
                     </li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img class="profile-thumbnail" src="/img/user.png" /><span>Samuel</span> <span class="caret"></span>
+                        <a id="profile_dropdown" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img class="profile-thumbnail" src="/img/user.png" /><span>Samuel</span> <span class="caret"></span>
                         </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#"><span class="glyphicon glyphicon-user"></span> Mein Profil</a>
-                            </li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Abmelden</a>
-                            </li>
-                        </ul>
                     </li>
                 </ul>
             </div>
@@ -195,6 +188,94 @@
         <div class="mindmap">
         </div>
         <div class="empty-message">Bitte Mindmap zum Anzeigen links auswählen!</div>
+
+        <div id="profil_container">
+            <div class="row profile">
+                <div class="col-md-3">
+                    <div class="profile-sidebar">
+                        <!-- SIDEBAR USERPIC -->
+                        <div class="profile-userpic">
+                            <img src="/img/cat.jpg" class="img-responsive" alt=""/>
+                        </div>
+                        <!-- END SIDEBAR USERPIC -->
+                        <!-- SIDEBAR USER TITLE -->
+                        <div class="profile-usertitle">
+                            <div class="profile-usertitle-name">
+                                Samuel
+                            </div>
+                            <div class="profile-usertitle-job">
+                                Mindmapper
+                            </div>
+                        </div>
+                        <!-- END SIDEBAR USER TITLE -->
+                        <!-- SIDEBAR MENU -->
+                        <div class="profile-usermenu">
+                            <ul class="nav" id="profile_menu">
+                                <li class="active">
+                                    <a href="#">
+                                        <i class="glyphicon glyphicon-home"></i>
+                                        Overview </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="glyphicon glyphicon-user"></i>
+                                        Account Settings </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="glyphicon glyphicon-ok"></i>
+                                        Tasks </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="glyphicon glyphicon-flag"></i>
+                                        Help </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- END MENU -->
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="profile-content">
+                        <div>
+                            <form id="tab" >
+                                <label>Username</label><br/>
+                                <input type="text" value="jsmith" class="input-xlarge"/><br/>
+                                <label>First Name</label><br/>
+                                <input type="text" value="John" class="input-xlarge"/><br/>
+                                <label>Last Name</label><br/>
+                                <input type="text" value="Smith" class="input-xlarge"/><br/>
+                                <label>Email</label><br/>
+                                <input type="text" value="jsmith@yourcompany.com" class="input-xlarge"/><br/>
+                                <label>Address</label><br/>
+                                <textarea value="Smith" rows="3" class="input-xlarge">
+                                    2817 S 49th
+                                    Apt 314
+                                    San Jose, CA 95101
+                                </textarea><br/>
+                                <label>Time Zone</label><br/>
+                                <select name="DropDownTimezone" id="DropDownTimezone" class="input-xlarge">
+                                    <option value="-12.0">(GMT -12:00) Eniwetok, Kwajalein</option>
+                                </select><br/><br/>
+                                <div>
+                                    <button class="btn btn-primary">Update</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div style="display:none">
+                            Hier könnten ihre Einstellungen stehen!
+                        </div>
+                        <div style="display:none">
+                            Hast du nichts besseres zu tun?
+                        </div>
+                        <div style="display:none">
+                            Hallo, hier steht ein Text ihr Affen!!
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="/js/mindcloud.js"></script>
