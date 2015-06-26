@@ -16,10 +16,13 @@ public class MindMap extends DomainObject {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
+    // TODO var name = "name"
     private String title;
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Node> nodes = new ArrayList<>();
+
+    // TODO add edges list
 
     public MindMap() {
     }

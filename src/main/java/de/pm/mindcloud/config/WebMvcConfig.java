@@ -24,7 +24,6 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         return xsltResolover;
     }
 
-
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/**").addResourceLocations("classpath:resources/", "classpath:static/");

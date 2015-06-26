@@ -22,6 +22,8 @@ public class Node extends DomainObject {
     @OneToOne
     private Node parent;
 
+    // TODO remove recursion
+
     @OneToMany(cascade = CascadeType.ALL)
     private List<Node> nodes = new ArrayList<>();
 
