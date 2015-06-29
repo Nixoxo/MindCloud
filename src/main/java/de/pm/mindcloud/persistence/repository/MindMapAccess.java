@@ -15,12 +15,16 @@ public class MindMapAccess {
     @Autowired
     private DatabaseService database;
 
-    public MindMap find(int id) {
+    public MindMap find(String id) {
         return database.find(MindMap.class, id);
     }
 
     public void save(MindMap mindMap) {
-        database.save(mindMap);
+        if (mindMap.getId() == null) {
+            database.insert(mindMap);
+        } else {
+            database.update(mindMap);
+        }
     }
 
     public void delete(MindMap mindMap) {

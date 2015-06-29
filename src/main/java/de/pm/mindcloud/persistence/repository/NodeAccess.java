@@ -14,11 +14,12 @@ public class NodeAccess {
     @Autowired
     private DatabaseService database;
 
-    public Node find(int id) {
+    public Node find(String id) {
         return database.find(Node.class, id);
     }
+
     public void save(Node node) {
-        if (node.getId() == 0) {
+        if (node.getId() == null) {
             database.insert(node);
         } else {
             database.update(node);
@@ -26,13 +27,6 @@ public class NodeAccess {
     }
 
     public void delete(Node node) {
-
-        if (node.getParent() != null) {
-            Node parent = node.getParent();
-            parent.getNodes().remove(node);
-            database.update(parent);
-        }
-
         database.delete(node);
     }
 

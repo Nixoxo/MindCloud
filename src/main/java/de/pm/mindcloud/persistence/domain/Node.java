@@ -11,40 +11,19 @@ import java.util.List;
  */
 
 @Entity
-public class Node extends DomainObject {
+public class Node {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private String id;
 
     private String title;
-
-    @OneToOne
-    private Node parent;
-
-    // TODO remove recursion
-
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Node> nodes = new ArrayList<>();
 
     public Node() {
     }
 
-    public Node(String title) {
+    public Node(String id, String title) {
+        this.id = id;
         this.title = title;
-    }
-
-    public void addNode(Node node) {
-        node.setParent(this);
-        nodes.add(node);
-    }
-
-    public List<Node> getNodes() {
-        return nodes;
-    }
-
-    public void setNodes(List<Node> nodes) {
-        this.nodes = nodes;
     }
 
     public String getTitle() {
@@ -55,25 +34,17 @@ public class Node extends DomainObject {
         this.title = title;
     }
 
-    public Node getParent() {
-        return parent;
-    }
 
-    public void setParent(Node parent) {
-        this.parent = parent;
-    }
-
-    @Override
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
     @Override
     public String toString() {
-        return "{\"title\": \"" + title + "\", \"nodes\": " + Arrays.toString(nodes.toArray()) + "}";
+        return "{\"title\": \"" + title + "\"}";
     }
 }

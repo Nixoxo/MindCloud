@@ -54,8 +54,7 @@ mindcloud.modules.editor = {};
             exportMindmapAsImage();
         });
         editor.setMindmap();
-        mindcloud.client.registerAction('getMindmap', editor.setMindmap);
-        mindcloud.client.registerAction('saveMindmap', editor.setMindmap);
+        mindcloud.client.registerAction('setMindmap', editor.setMindmap);
     };
 
     function registerMenuAction(id, callback) {

@@ -1,5 +1,7 @@
 package de.pm.mindcloud.persistence.domain;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,16 +12,16 @@ import java.util.List;
  * This class is responsible
  */
 @Entity
-public class MindMap extends DomainObject {
+public class MindMap {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    @GeneratedValue(generator="system-uuid")
+    @GenericGenerator(name="system-uuid", strategy = "uuid")
+    private String id;
 
-    // TODO var name = "name"
-    private String title;
+    private String name;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     private List<Node> nodes = new ArrayList<>();
 
     // TODO add edges list
@@ -27,16 +29,16 @@ public class MindMap extends DomainObject {
     public MindMap() {
     }
 
-    public MindMap(String title) {
-        this.title = title;
+    public MindMap(String name) {
+        this.name = name;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public List<Node> getNodes() {
@@ -47,17 +49,16 @@ public class MindMap extends DomainObject {
         this.nodes = nodes;
     }
 
-    @Override
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
     @Override
     public String toString() {
-        return "{\"title\": \"" + title + "\", \"nodes\": " + Arrays.toString(nodes.toArray()) + "}";
+        return "{\"name\": \"" + name + "\", \"nodes\": " + Arrays.toString(nodes.toArray()) + "}";
     }
 }

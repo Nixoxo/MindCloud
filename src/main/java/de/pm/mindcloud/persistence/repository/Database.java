@@ -1,6 +1,5 @@
 package de.pm.mindcloud.persistence.repository;
 
-import de.pm.mindcloud.persistence.domain.DomainObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -37,15 +36,6 @@ public class Database implements DatabaseService {
         tx.begin();
         entityManager.remove(entity);
         tx.commit();
-    }
-
-    @Override
-    public void save(DomainObject entity) {
-        if (entity.getId() == 0) {
-            insert(entity);
-        } else {
-            update(entity);
-        }
     }
 
     @Override

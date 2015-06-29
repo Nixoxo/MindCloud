@@ -11,6 +11,8 @@ import javax.xml.transform.dom.DOMSource;
  * Created by samuel on 18.06.15.
  */
 public class XMLSource {
+    public static final String VALUE = "xmlSource";
+
     public static XMLSource xml() {
         try {
             return new XMLSource();

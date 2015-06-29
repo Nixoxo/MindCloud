@@ -51,7 +51,7 @@ mindcloud.modules.menu = {};
                 $('#search-results').addClass('hidden');
             }
         });
-        mindcloud.client.registerAction('getMindmapList', menu.setMindmapList);
+        mindcloud.client.registerAction('setMindmapList', menu.setMindmapList);
         mindcloud.client.registerAction('searchMindmapList', menu.setSearchList)
     };
 

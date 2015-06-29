@@ -24,7 +24,7 @@ public class MindCloudController {
     private final Logger logger = Logger.getLogger(MindCloudController.class);
 
     @MessageMapping("/getMindmapList")
-    @SendTo("/getMindmapList")
+    @SendTo("/setMindmapList")
     public List<MindmapResponse> getMindmapList() throws Exception {
         List<MindmapResponse> mindmapList = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
@@ -37,7 +37,7 @@ public class MindCloudController {
     }
 
     @MessageMapping("/getMindmap")
-    @SendTo("/getMindmap")
+    @SendTo("/setMindmap")
     public MindMap getMindmap(MindmapRequest request) throws Exception {
         MindMap mindmap = new MindMap("Mindmap");
         // TODO change mindmap class...

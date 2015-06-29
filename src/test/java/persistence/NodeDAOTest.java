@@ -29,16 +29,16 @@ public class NodeDAOTest {
     public void createMindMap() throws Exception {
 
         MindMap mindMap = new MindMap("Die yolo map");
-        Node first = new Node("First child");
-        Node second = new Node("Second child");
-        Node third = new Node("Third child");
-        Node fourth = new Node("Fourth child");
-
-        first.addNode(second);
-        second.addNode(third);
-        third.addNode(fourth);
+        Node first = new Node("0", "First child");
+        Node second = new Node("1", "Second child");
+        Node third = new Node("2", "Third child");
+        Node fourth = new Node("3", "Fourth child");
 
         mindMap.getNodes().add(first);
+        mindMap.getNodes().add(second);
+        mindMap.getNodes().add(third);
+        mindMap.getNodes().add(fourth);
+
         mindMapAccess.save(mindMap);
     }
 
