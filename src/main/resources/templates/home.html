@@ -67,16 +67,21 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="dropdown">
+                    <li class="dropdown" id="profile_dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img class="profile-thumbnail" src="/img/user.png" /><span>Samuel</span> <span class="caret"></span>
                         </a>
-                        <ul class="dropdown-menu">
+                        <!--<ul class="dropdown-menu">
                             <li><a href="#"><span class="glyphicon glyphicon-user"></span> Mein Profil</a>
                             </li>
                             <li role="separator" class="divider"></li>
                             <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Abmelden</a>
                             </li>
-                        </ul>
+                        </ul>-->
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <span class="glyphicon glyphicon-off"></span><span>Ausloggen</span>
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -200,7 +205,7 @@
         <div class="empty-message">Bitte Mindmap zum Anzeigen links auswählen!</div>
     </div>
 
-    <div id="profil_container" class="hidden">
+    <div id="profil_container" class="">
         <div class="row profile">
             <div class="col-md-3">
                 <div class="profile-sidebar">
@@ -224,19 +229,19 @@
                         <ul class="nav" id="profile_menu">
                             <li class="active">
                                 <a href="#">
-                                    <i class="glyphicon glyphicon-home"></i> Overview </a>
+                                    <i class="glyphicon glyphicon-home"></i> Übersicht </a>
                             </li>
                             <li>
                                 <a href="#">
-                                    <i class="glyphicon glyphicon-user"></i> Account Settings </a>
+                                    <i class="glyphicon glyphicon-user"></i> Profil anpassen </a>
                             </li>
                             <li>
                                 <a href="#">
-                                    <i class="glyphicon glyphicon-ok"></i> Tasks </a>
+                                    <i class="glyphicon glyphicon-ok"></i> Profil bearbeiten </a>
                             </li>
                             <li>
                                 <a href="#">
-                                    <i class="glyphicon glyphicon-flag"></i> Help </a>
+                                    <i class="glyphicon glyphicon-flag"></i> Freunde verwalten </a>
                             </li>
                         </ul>
                     </div>
@@ -246,11 +251,26 @@
             <div class="col-md-9">
                 <div class="profile-content">
                     <div>
-                        <form id="tab">
+
+                    </div>
+                    <div style="display:none">
+                        <form>
                             <label>Username</label>
                             <br/>
                             <input type="text" value="jsmith" class="input-xlarge" />
                             <br/>
+                            <label>Passwort</label>
+                            <br/>
+                            <input type="text" value="****" class="input-xlarge" />
+                            <br/>
+                            <br/>
+                            <div>
+                                <button class="btn btn-primary">Update</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div style="display:none">
+                        <form id="tab">
                             <label>First Name</label>
                             <br/>
                             <input type="text" value="John" class="input-xlarge" />
@@ -269,26 +289,48 @@
                                 2817 S 49th Apt 314 San Jose, CA 95101
                             </textarea>
                             <br/>
-                            <label>Time Zone</label>
-                            <br/>
-                            <select name="DropDownTimezone" id="DropDownTimezone" class="input-xlarge">
-                                <option value="-12.0">(GMT -12:00) Eniwetok, Kwajalein</option>
-                            </select>
-                            <br/>
-                            <br/>
                             <div>
                                 <button class="btn btn-primary">Update</button>
                             </div>
                         </form>
                     </div>
-                    <div style="display:none">
-                        Hier könnten ihre Einstellungen stehen!
-                    </div>
-                    <div style="display:none">
-                        Hast du nichts besseres zu tun?
-                    </div>
-                    <div style="display:none">
-                        Hallo, hier steht ein Text ihr Affen!!
+                    <div class="friend_search" style="display:none">
+                        <div class="friend_row">
+                            <h4>Freunde suchen und hinzufügen</h4>
+                            <div>Suche erfolgt dynamisch, Ergebnisse werden angezeigt und können manuell ausgewählt werden.</div>
+                            <div id="friend_search_input">
+                                <div class="input_group col-md-12">
+                                    <input type="text" class="search-query form-control" placeholder="Suche nach Freunden"/>
+                                    <span class="input-group-btn">
+                                        <span class="glyphicon glyphicon-search"></span>
+                                    </span>
+                                    <div class="friend_search_result">
+                                        <div class="friend_search_item">
+                                            <img src="img/user.png" class="img-fsearch img-circle img-responsive"/>
+                                            <span>Samuel</span>
+                                            <button type="button" class="btn-fsearch btn btn-default">
+                                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                            </button>
+                                        </div>
+                                        <div class="f_clearfix"></div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="">
+                            <h4>Freunde löschen</h4>
+                            <div class="friend_search_result">
+                                <div class="friend_search_item">
+                                    <img src="img/user.png" class="img-fsearch img-circle img-responsive"/>
+                                    <span>Samuel</span>
+                                    <button type="button" class="btn-fsearch btn btn-default">
+                                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                    </button>
+                                </div>
+                                <div class="f_clearfix"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

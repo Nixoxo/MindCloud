@@ -203,14 +203,13 @@ a:focus {
     border: 1px solid #999;
 }
 
+/*Profile Container*/
+
 #profil_container {
-    min-height: 460px;
     position: absolute;
     display: block;
     top: 50px;
-    width: 30%;
     right: -20px;
-    height: 50%;
     background: #fff;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
@@ -219,6 +218,16 @@ a:focus {
     padding: 20px 0 10px 0;
     position: relative;
     height: 60%;
+    width: 150px;
+    border-right-color: #222222;
+    border-right-style: dashed;
+}
+
+.profile-content {
+    position: relative;
+    padding: 20px;
+    margin-left: 25px;
+    width: 300px;
 }
 
 .profile-userpic img {
@@ -227,6 +236,7 @@ a:focus {
     -webkit-border-radius: 50% !important;
     -moz-border-radius: 50% !important;
     border-radius: 50% !important;
+    width: 90%;
 }
 
 .profile-usertitle {
@@ -288,10 +298,33 @@ a:focus {
     border-left: 2px solid #5b9bd1;
     margin-left: -2px;
 }
-/* Profile Content */
 
-.profile-content {
-    position: relative;
-    padding: 20px;
-    min-height: 460px;
+/* Friend Search*/
+.friend_search_result{
+    height:auto;
+    margin: 5px;
 }
+
+.friend_search_item{
+    height: 60px;
+    width:100%;
+    float: left;
+    padding: 5px 5px 5px 5px;
+    border-style: solid;
+    border-color: #080808;
+}
+.img-fsearch{
+    width: 50px;
+    float:left;
+}
+
+.btn-fsearch{
+    position: relative;
+    float:right;
+    margin-top: 10px;
+}
+
+.f_clearfix{
+    float:none;
+}
+
