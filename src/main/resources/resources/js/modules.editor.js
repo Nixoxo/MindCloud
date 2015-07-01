@@ -44,9 +44,12 @@ mindcloud.modules.editor = {};
         $('.mindmap-name').click(function (event) {
             event.preventDefault();
             renameMindmap();
-        })
+        });
         registerMenuAction('editor-rename', function () {
             renameMindmap();
+        });
+        registerMenuAction('editor-delete', function () {
+            deleteMindmap();
         });
         registerMenuAction('editor-export', function () {
             exportMindmapAsJson();
@@ -56,6 +59,9 @@ mindcloud.modules.editor = {};
         });
         editor.setMindmap();
         mindcloud.client.registerAction('setMindmap', editor.setMindmap);
+        mindcloud.client.registerAction('deleteMindmapSuccess', function () {
+            editor.setMindmap(undefined);
+        });
     };
 
     function registerMenuAction(id, callback) {
@@ -215,5 +221,15 @@ mindcloud.modules.editor = {};
         }).appendTo('body');
         link.get(0).click();
         link.remove();
+    }
+
+    function deleteMindmap() {
+        mindcloud.ui.showConfirmDialog('Mindmap löschen', 'Sind Sie sicher, dass Sie diese Mindmap löschen wollen?', function (event) {
+            if (event.action == 'yes') {
+                mindcloud.client.invokeAction('deleteMindmap', {
+                    id: mindcloud.cache.getMindmap().id
+                });
+            }
+        });
     }
 })(mindcloud.modules.editor);

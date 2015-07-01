@@ -81,9 +81,9 @@
                             </li>
                         </ul>-->
                             </li>
-                            <li class="dropdown">
+                            <li>
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                    <span class="glyphicon glyphicon-off"></span><span>Ausloggen</span>
+                                    <span class="glyphicon glyphicon-off"></span>
                                 </a>
                             </li>
                         </ul>
@@ -147,7 +147,7 @@
                                 </li>
                                 <li><a id="editor-save" href="#"><span class="glyphicon glyphicon-floppy-disk"></span> Speichern<span class="text-muted">Strg + S</span></a>
                                 </li>
-                                <li><a href="#"><span class="glyphicon glyphicon-trash"></span> Löschen</a>
+                                <li><a id="editor-delete" href="#"><span class="glyphicon glyphicon-trash"></span> Löschen</a>
                                 </li>
                                 <li role="separator" class="divider"></li>
                                 <li><a id="editor-export" href="#"><span class="glyphicon glyphicon-cloud-download"></span> Exportieren</a>
@@ -165,6 +165,7 @@
                                 </li>
                             </ul>
                         </li>
+                        <!--
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Ansicht <span class="caret"></span></a>
                             <ul class="dropdown-menu">
@@ -200,6 +201,7 @@
                                 </li>
                             </ul>
                         </li>
+                        -->
                     </ul>
                     <a href="#" class="mindmap-name navbar-text navbar-right"></a>
                 </nav>

@@ -5,6 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created on 15/06/15
@@ -48,5 +49,11 @@ public class MindmapData {
 
     public void putData(String key, String value) {
         data.put(key, value);
+    }
+
+    public boolean contains(String search) {
+        List<String> allowedKeys = Arrays.asList(new String[]{"title"});
+        Map<String, String> result = data.entrySet().parallelStream().filter(e -> e.getValue().toLowerCase().contains(search.toLowerCase()) && allowedKeys.contains(e.getKey())).collect(Collectors.toMap(e -> e.getKey(), e-> e.getValue()));
+        return !result.isEmpty();
     }
 }

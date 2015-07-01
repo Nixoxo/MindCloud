@@ -69,4 +69,12 @@ public class Mindmap {
     public String toString() {
         return "{\"name\": \"" + name + "\", \"nodes\": " + Arrays.toString(nodes.toArray()) + ", \"edges\": " + Arrays.toString(edges.toArray()) + "}";
     }
+
+    public boolean contains(String search) {
+        if (name.toLowerCase().contains(search.toLowerCase())) {
+            return true;
+        }
+        List<MindmapData> result = nodes.stream().filter(n -> n.contains(search)).collect(Collectors.toList());
+        return !result.isEmpty();
+    }
 }

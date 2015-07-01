@@ -55,7 +55,13 @@ mindcloud.modules.menu = {};
             }
         });
         mindcloud.client.registerAction('setMindmapList', menu.setMindmapList);
-        mindcloud.client.registerAction('searchMindmapList', menu.setSearchList)
+        mindcloud.client.registerAction('setSearchResult', menu.setSearchList)
+        mindcloud.client.registerAction('setMindmap', function (mindmap) {
+            mindcloud.client.invokeAction('getMindmapList');
+        });
+        mindcloud.client.registerAction('deleteMindmapSuccess', function (mindmap) {
+            mindcloud.client.invokeAction('getMindmapList');
+        });
     };
 
     menu.setMindmapList = function (list) {
