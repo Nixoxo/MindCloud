@@ -106,7 +106,6 @@
                         </li>
                         <ul class="sub-menu collapse in hidden" id="search-results">
                         </ul>
-
                         <li data-toggle="collapse" data-target="#my-mindmaps" aria-expanded="true">
                             <a href="#"><span class="glyphicon glyphicon-th-list"></span> Meine Mindmaps <span class="caret"></span></a>
                         </li>
@@ -114,6 +113,9 @@
                         </ul>
                         <li id="create-mindmap">
                             <a href="#"><span class="glyphicon glyphicon-plus-sign"></span> Neue Mindmap</a>
+                        </li>
+                        <li id="import-mindmap">
+                            <a href="#"><span class="glyphicon glyphicon-cloud-upload"></span> Mindmap importieren</a>
                         </li>
                         <li data-toggle="collapse" data-target="#my-friends" class="collapsed">
                             <a href="#"><span class="glyphicon glyphicon-user"></span> Meine Freunde<span class="caret"></span></a>
@@ -341,6 +343,8 @@
                     </div>
                 </div>
             </div>
+
+            <input class="hidden" type="file" name="file" id="import-mindmap-file" />
 
             <script src="/js/mindcloud.js"></script>
             <script src="/js/notify.js"></script>

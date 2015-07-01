@@ -130,6 +130,50 @@ mindcloud.modules.editor = {};
         mindcloud.modules.mindmap.set(mindmap);
     };
 
+    editor.importMindmap = function (mindmap) {
+        mindmap.id = undefined;
+        if (validateMindmap(mindmap)) {
+            editor.setMindmap(mindmap);
+            return true;
+        }
+        return false;
+    };
+
+    function validateMindmap(mindmap) {
+        console.log(mindmap);
+        if (mindmap.id != undefined) {
+            return false;
+        }
+        if (mindmap.name == undefined || typeof mindmap.name != 'string' || mindmap.name.length == 0) {
+            return false;
+        }
+        if (mindmap.nodes.length == 0) {
+            return false;
+        }
+        for (var i = 0; i < mindmap.nodes.length; i++) {
+            var node = mindmap.nodes[i];
+            if (node.data.id == undefined || typeof node.data.id != 'string' || node.data.id.length == 0) {
+                return false;
+            }
+            if (node.data.title == undefined || typeof node.data.title != 'string' || node.data.title.length == 0) {
+                return false;
+            }
+            if (node.data.level == undefined || node.data.level != parseInt(node.data.level)) {
+                return false;
+            }
+        }
+        for (var i = 0; i < mindmap.edges.length; i++) {
+            var edge = mindmap.edges[i];
+            if (edge.data.source == undefined || typeof edge.data.source != 'string' || edge.data.source.length == 0) {
+                return false;
+            }
+            if (edge.data.target == undefined || typeof edge.data.target != 'string' || edge.data.target.length == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     function refreshMenuState() {
         setMenuActionEnabled('editor-step-backwards', mindcloud.cache.isStepBackwardsAvailable());
         setMenuActionEnabled('editor-step-forward', mindcloud.cache.isStepForwardAvailable());

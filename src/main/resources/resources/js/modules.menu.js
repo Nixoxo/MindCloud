@@ -54,6 +54,24 @@ mindcloud.modules.menu = {};
                 $('#search-results').addClass('hidden');
             }
         });
+        $('#import-mindmap').click(function (event) {
+            $('#import-mindmap-file').click();
+        });
+        $('#import-mindmap-file').change(function () {
+            var file = this.files[0];
+            var reader = new FileReader();
+            reader.onload = function (progressEvent) {
+                try {
+                    var mindmap = JSON.parse(this.result);
+                    if (!mindcloud.modules.editor.importMindmap(mindmap)) {
+                        throw "error";
+                    }
+                } catch (e) {
+                    mindcloud.notify.error('Fehler beim Importieren!');
+                }
+            };
+            reader.readAsText(file);
+        });
         mindcloud.client.registerAction('setMindmapList', menu.setMindmapList);
         mindcloud.client.registerAction('setSearchResult', menu.setSearchList)
         mindcloud.client.registerAction('setMindmap', function (mindmap) {

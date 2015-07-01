@@ -11,7 +11,7 @@ mindcloud.cache = {};
                     data: {
                         id: mindcloud.generateUUID(),
                         title: name,
-                        level: 0
+                        level: '0'
                     }
                 }
             ],
@@ -21,6 +21,7 @@ mindcloud.cache = {};
     };
 
     cache.setMindmap = function (mindmap) {
+        console.log(mindmap);
         timeIndex = 0;
         history = [mindmap];
     };
@@ -54,6 +55,7 @@ mindcloud.cache = {};
     };
 
     function pushNewVersion(mindmap) {
+        console.log(mindmap);
         timeIndex++;
         if (timeIndex < history.length) {
             history.splice(timeIndex, history.length - timeIndex);
@@ -71,7 +73,7 @@ mindcloud.cache = {};
             data: {
                 id: mindcloud.generateUUID(),
                 title: text,
-                level: parent.level + 1
+                level: '' + (parseInt(parent.data.level) + 1)
             }
         };
         var edge = {
