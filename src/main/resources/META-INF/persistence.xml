@@ -7,8 +7,8 @@
     <persistence-unit name="DEFAULT" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.ogm.jpa.HibernateOgmPersistence</provider>
         <class>de.pm.mindcloud.persistence.domain.User</class>
-        <class>de.pm.mindcloud.persistence.domain.Node</class>
-        <class>de.pm.mindcloud.persistence.domain.MindMap</class>
+        <class>de.pm.mindcloud.persistence.domain.MindmapData</class>
+        <class>de.pm.mindcloud.persistence.domain.Mindmap</class>
     </persistence-unit>
 
 </persistence>

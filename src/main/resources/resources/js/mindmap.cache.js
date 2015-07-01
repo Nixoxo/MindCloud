@@ -29,6 +29,10 @@ mindcloud.cache = {};
         return history[timeIndex];
     };
 
+    cache.getMindmapClone = function () {
+        return getCurrentMindmapClone();
+    };
+
     cache.isStepBackwardsAvailable = function () {
         return timeIndex > 0;
     };

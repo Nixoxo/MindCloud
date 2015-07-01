@@ -6,30 +6,30 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created on 15/06/15
  * This class is responsible
  */
 @Entity
-public class MindMap {
+public class Mindmap {
 
     @Id
-    @GeneratedValue(generator="system-uuid")
-    @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String id;
 
     private String name;
 
-    @OneToMany
-    private List<Node> nodes = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<MindmapData> nodes = new ArrayList<>();
 
-    // TODO add edges list
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<MindmapData> edges = new ArrayList<>();
 
-    public MindMap() {
+    public Mindmap() {
     }
 
-    public MindMap(String name) {
+    public Mindmap(String name) {
         this.name = name;
     }
 
@@ -41,12 +41,20 @@ public class MindMap {
         this.name = name;
     }
 
-    public List<Node> getNodes() {
+    public List<MindmapData> getNodes() {
         return nodes;
     }
 
-    public void setNodes(List<Node> nodes) {
+    public void setNodes(List<MindmapData> nodes) {
         this.nodes = nodes;
+    }
+
+    public List<MindmapData> getEdges() {
+        return edges;
+    }
+
+    public void setEdges(List<MindmapData> edges) {
+        this.edges = edges;
     }
 
     public String getId() {
@@ -59,6 +67,6 @@ public class MindMap {
 
     @Override
     public String toString() {
-        return "{\"name\": \"" + name + "\", \"nodes\": " + Arrays.toString(nodes.toArray()) + "}";
+        return "{\"name\": \"" + name + "\", \"nodes\": " + Arrays.toString(nodes.toArray()) + ", \"edges\": " + Arrays.toString(edges.toArray()) + "}";
     }
 }

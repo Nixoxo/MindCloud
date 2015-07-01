@@ -1,12 +1,13 @@
 package de.pm.mindcloud.persistence.repository;
 
-import de.pm.mindcloud.persistence.domain.MindMap;
+import de.pm.mindcloud.persistence.domain.Mindmap;
 import de.pm.mindcloud.persistence.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.Query;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created on 18/06/15
@@ -15,6 +16,9 @@ import java.util.List;
 
 @Component
 public class UserAccess {
+
+    @Autowired
+    private MindmapAccess mindmapAccess;
 
     @Autowired
     private DatabaseService database;
@@ -42,14 +46,14 @@ public class UserAccess {
 
     public void save(User user) {
         if (user.getId() == null) {
+            user.setId(UUID.randomUUID().toString());
             database.insert(user);
         } else {
             database.update(user);
         }
     }
 
-    public void delete(MindMap mindMap) {
+    public void delete(Mindmap mindMap) {
         database.delete(mindMap);
     }
-
 }

@@ -38,7 +38,8 @@ mindcloud.modules.editor = {};
             }
         });
         registerMenuAction('editor-save', function () {
-            mindcloud.client.invokeAction('saveMindmap', mindcloud.cache.getMindmap());
+            var mindmap = mindcloud.cache.getMindmapClone();
+            mindcloud.client.invokeAction('saveMindmap', mindmap);
         });
         $('.mindmap-name').click(function (event) {
             event.preventDefault();

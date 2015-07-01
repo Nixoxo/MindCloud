@@ -1,9 +1,9 @@
 package persistence;
 
 import de.pm.mindcloud.MindCloudApplication;
-import de.pm.mindcloud.persistence.domain.MindMap;
-import de.pm.mindcloud.persistence.domain.Node;
-import de.pm.mindcloud.persistence.repository.MindMapAccess;
+import de.pm.mindcloud.persistence.domain.Mindmap;
+import de.pm.mindcloud.persistence.domain.MindmapData;
+import de.pm.mindcloud.persistence.repository.MindmapAccess;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,21 +23,15 @@ import org.springframework.test.context.web.WebAppConfiguration;
 public class NodeDAOTest {
 
     @Autowired
-    private MindMapAccess mindMapAccess;
+    private MindmapAccess mindMapAccess;
 
     @Test
     public void createMindMap() throws Exception {
 
-        MindMap mindMap = new MindMap("Die yolo map");
-        Node first = new Node("0", "First child");
-        Node second = new Node("1", "Second child");
-        Node third = new Node("2", "Third child");
-        Node fourth = new Node("3", "Fourth child");
-
-        mindMap.getNodes().add(first);
-        mindMap.getNodes().add(second);
-        mindMap.getNodes().add(third);
-        mindMap.getNodes().add(fourth);
+        Mindmap mindMap = new Mindmap("Die yolo map");
+        MindmapData first = new MindmapData();
+        first.putData("id", "123");
+        first.putData("title", "Title");
 
         mindMapAccess.save(mindMap);
     }

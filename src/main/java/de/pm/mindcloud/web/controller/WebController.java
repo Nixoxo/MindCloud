@@ -12,17 +12,17 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.dom.DOMSource;
 
 import static de.pm.mindcloud.web.XMLSource.*;
+import static de.pm.mindcloud.web.controller.SessionController.USER;
 
 /**
  * Created by samuel on 17.06.15.
  */
 @Controller
 public class WebController {
-    public static final String USER = "user";
-    private static Logger logger = Logger.getLogger(WebController.class);
+    @Autowired
+    private SessionController sessionController;
 
     @Autowired
     private UserAccess userAccess;
@@ -32,50 +32,62 @@ public class WebController {
         if (session.getAttribute("user") == null) {
             return new ModelAndView("redirect:/login");
         }
-        return createEmptyXSLTModel("index");
+        return createEmptyXSLTModel("index", session);
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ModelAndView authenticateLogin(HttpSession session, @RequestParam("username") String username, @RequestParam("password") String password) {
-        User user = userAccess.findByName(username);
-        logger.info(user == null);
-        if (user != null && user.getPassword().equals(password)) {
-            logger.info(user);
-            session.setAttribute(USER, user);
+        if (loginUser(username, password, session)) {
             return new ModelAndView("redirect:/");
         }
-        return createErrorXSLTModel("login", "Login fehlgeschlagen");
+        return createErrorXSLTModel("login", session, "Login fehlgeschlagen");
     }
 
     @RequestMapping(value = "/login")
-    public ModelAndView login() throws ParserConfigurationException {
-        return createEmptyXSLTModel("login");
+    public ModelAndView login(HttpSession session) throws ParserConfigurationException {
+        if (session.getAttribute(USER) != null) {
+            return new ModelAndView("redirect:/");
+        }
+        return createEmptyXSLTModel("login", session);
+    }
+
+    private boolean loginUser(String username, String password, HttpSession session) {
+        User user = userAccess.findByName(username);
+        if (user != null && user.getPassword().equals(password)) {
+            session.setAttribute(USER, user);
+            return true;
+        }
+        return false;
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ModelAndView authenticateRegistration(HttpSession session, @RequestParam("username") String username, @RequestParam("password") String password, @RequestParam("password2") String password2) {
         if (username == null || username.length() == 0 || userAccess.usernameExists(username)) {
-            return createErrorXSLTModel("register", "Der Username ist leider bereits vergeben!");
+            return createErrorXSLTModel("register", session, "Der Username ist leider bereits vergeben!");
         }
         if (username.contains(" ")) {
-            return createErrorXSLTModel("register", "Der Username darf keine Leerzeichen enthalten!");
+            return createErrorXSLTModel("register", session, "Der Username darf keine Leerzeichen enthalten!");
         }
         if (password == null || password.length() < 8) {
-            return createErrorXSLTModel("register", "Passwort zu kurz. Es muss mindestens 8 Zeichen lang sein!");
+            return createErrorXSLTModel("register", session, "Passwort zu kurz. Es muss mindestens 8 Zeichen lang sein!");
         }
         if (!password.equals(password2)) {
-            return createErrorXSLTModel("register", "Die Passwörter stimmen nicht überein");
+            return createErrorXSLTModel("register", session, "Die Passwörter stimmen nicht überein");
         }
         User user = new User(username, password);
         userAccess.save(user);
-        logger.info(user);
-        session.setAttribute(USER, user);
-        return new ModelAndView("redirect:/");
+        if (loginUser(username, password, session)) {
+            return new ModelAndView("redirect:/");
+        }
+        return new ModelAndView("redirect:/login");
     }
 
     @RequestMapping(value = "/register")
     public ModelAndView register(HttpSession session) {
-        return createEmptyXSLTModel("register");
+        if (session.getAttribute(USER) != null) {
+            return new ModelAndView("redirect:/");
+        }
+        return createEmptyXSLTModel("register", session);
     }
 
     @RequestMapping(value = "/logout")
@@ -84,15 +96,15 @@ public class WebController {
         return new ModelAndView("redirect:/");
     }
 
-    private ModelAndView createEmptyXSLTModel(String view) {
+    private ModelAndView createEmptyXSLTModel(String view, HttpSession session) {
         ModelAndView model = new ModelAndView(view);
-        model.addObject("xmlSource", xml().build());
+        model.addObject("xmlSource", xml(session).build());
         return model;
     }
 
-    private ModelAndView createErrorXSLTModel(String view, String error) {
+    private ModelAndView createErrorXSLTModel(String view, HttpSession session, String error) {
         ModelAndView model = new ModelAndView(view);
-        model.addObject("xmlSource", xml().node("error", error).build());
+        model.addObject("xmlSource", xml(session).node("error", error).build());
         return model;
     }
 }

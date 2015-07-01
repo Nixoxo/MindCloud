@@ -1,17 +1,17 @@
 package de.pm.mindcloud.web.channel;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import de.pm.mindcloud.persistence.domain.MindMap;
+import de.pm.mindcloud.persistence.domain.Mindmap;
+import de.pm.mindcloud.persistence.domain.User;
+import de.pm.mindcloud.persistence.repository.MindmapAccess;
+import de.pm.mindcloud.persistence.repository.UserAccess;
+import de.pm.mindcloud.web.controller.SessionController;
 import de.pm.mindcloud.web.domain.request.MindmapRequest;
 import de.pm.mindcloud.web.domain.response.MindmapResponse;
-import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.socket.TextMessage;
-import org.springframework.web.socket.WebSocketSession;
-import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,27 +21,66 @@ import java.util.List;
  */
 @Controller
 public class MindCloudController {
-    private final Logger logger = Logger.getLogger(MindCloudController.class);
+
+
+    @Autowired
+    private SessionController sessionController;
+
+    @Autowired
+    private MindmapAccess mindmapAccess;
+
+    @Autowired
+    private UserAccess userAccess;
 
     @MessageMapping("/getMindmapList")
     @SendTo("/setMindmapList")
-    public List<MindmapResponse> getMindmapList() throws Exception {
+    public List<MindmapResponse> getMindmapList(SimpMessageHeaderAccessor headerAccessor) throws Exception {
+        User user = getUserFromRequest(headerAccessor);
+        return getMindmapResponses(user.getMindmaps());
+    }
+
+    @MessageMapping("/searchMindmapList")
+    @SendTo("/setSearchResult")
+    public List<MindmapResponse> searchMindmapList(SimpMessageHeaderAccessor headerAccessor) throws Exception {
+        User user = getUserFromRequest(headerAccessor);
+        return getMindmapResponses(user.getMindmaps());
+    }
+
+    private List<MindmapResponse> getMindmapResponses(List<Mindmap> mindmaps) {
         List<MindmapResponse> mindmapList = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            MindmapResponse mindmap =  new MindmapResponse();
-            mindmap.setId(String.valueOf(i));
-            mindmap.setName("Mindmap " + (i + 1));
-            mindmapList.add(mindmap);
+        for (Mindmap mindmap : mindmaps) {
+            MindmapResponse m = new MindmapResponse();
+            m.setId(mindmap.getId());
+            m.setName(mindmap.getName());
+            mindmapList.add(m);
         }
         return mindmapList;
     }
 
     @MessageMapping("/getMindmap")
     @SendTo("/setMindmap")
-    public MindMap getMindmap(MindmapRequest request) throws Exception {
-        MindMap mindmap = new MindMap("Mindmap");
-        // TODO change mindmap class...
+    public Mindmap getMindmap(SimpMessageHeaderAccessor headerAccessor, MindmapRequest request) throws Exception {
+        User user = getUserFromRequest(headerAccessor);
+        for (Mindmap mindmap : user.getMindmaps()) {
+            if (mindmap.getId().equals(request.getId())) {
+                return mindmap;
+            }
+        }
+        return null;
+    }
 
+    @MessageMapping("/saveMindmap")
+    @SendTo("/setMindmap")
+    public Mindmap saveMindmap(SimpMessageHeaderAccessor headerAccessor, Mindmap mindmap) {
+        User user = getUserFromRequest(headerAccessor);
+        mindmapAccess.save(mindmap);
+        user.putMindmap(mindmap);
+        userAccess.save(user);
         return mindmap;
+    }
+
+    private User getUserFromRequest(SimpMessageHeaderAccessor headerAccessor) {
+        String httpSessionId = (String) headerAccessor.getSessionAttributes().get("HTTPSESSIONID");
+        return sessionController.getUserBySessionId(httpSessionId);
     }
 }
