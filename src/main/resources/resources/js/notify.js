@@ -26,6 +26,16 @@ mindcloud.notify = {};
         if (Notification.permission !== "granted") {
             Notification.requestPermission();
         }
+        showInitNotification();
+    }
+
+    function showInitNotification() {
+        var message = $('#init-message');
+        if (message.length) {
+            var text = message.find('.text').text();
+            var type = message.find('.type').text();
+            show(text, state[type]);
+        }
     }
 
     notify.desktop = function (title, message, icon, callback) {

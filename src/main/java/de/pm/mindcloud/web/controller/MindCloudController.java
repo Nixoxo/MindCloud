@@ -1,4 +1,4 @@
-package de.pm.mindcloud.web.channel;
+package de.pm.mindcloud.web.controller;
 
 import de.pm.mindcloud.persistence.domain.Mindmap;
 import de.pm.mindcloud.persistence.domain.User;
@@ -7,6 +7,7 @@ import de.pm.mindcloud.persistence.repository.UserAccess;
 import de.pm.mindcloud.web.controller.SessionController;
 import de.pm.mindcloud.web.domain.request.MindmapRequest;
 import de.pm.mindcloud.web.domain.request.SearchRequest;
+import de.pm.mindcloud.web.domain.response.MindmapDataResponse;
 import de.pm.mindcloud.web.domain.response.MindmapResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -23,8 +24,6 @@ import java.util.stream.Collectors;
  */
 @Controller
 public class MindCloudController {
-
-
     @Autowired
     private SessionController sessionController;
 
@@ -97,6 +96,18 @@ public class MindCloudController {
             return true;
         }
         return false;
+    }
+
+    @MessageMapping("/getUserMindmapData")
+    @SendTo("/setUserMindmapData")
+    public MindmapDataResponse getUserMindmapData(SimpMessageHeaderAccessor headerAccessor) {
+        User user = getUserFromRequest(headerAccessor);
+        int mindmapsCount = user.getMindmaps().size();
+        int nodesCount = 0;
+        for (Mindmap mindmap : user.getMindmaps()) {
+            nodesCount += mindmap.getNodes().size();
+        }
+        return new MindmapDataResponse(mindmapsCount, nodesCount);
     }
 
     private User getUserFromRequest(SimpMessageHeaderAccessor headerAccessor) {

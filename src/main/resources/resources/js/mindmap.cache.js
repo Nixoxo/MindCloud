@@ -21,7 +21,6 @@ mindcloud.cache = {};
     };
 
     cache.setMindmap = function (mindmap) {
-        console.log(mindmap);
         timeIndex = 0;
         history = [mindmap];
     };
@@ -55,7 +54,6 @@ mindcloud.cache = {};
     };
 
     function pushNewVersion(mindmap) {
-        console.log(mindmap);
         timeIndex++;
         if (timeIndex < history.length) {
             history.splice(timeIndex, history.length - timeIndex);

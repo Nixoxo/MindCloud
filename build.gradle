@@ -60,6 +60,7 @@ dependencies {
     compile 'org.jboss.jbossts:jbossjta:4.16.4.Final'
 
     compile 'commons-lang:commons-lang:2.6'
+    compile 'commons-io:commons-io:2.4'
 
     compile 'org.eclipse.mylyn.github:org.eclipse.egit.github.core:2.1.5'
 }

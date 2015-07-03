@@ -20,6 +20,11 @@ mindcloud.modules.editor = {};
                 $(this).dropdown('toggle');
             }
         });
+        $(window).bind('beforeunload', function () {
+            if (mindcloud.cache.getMindmap() != undefined) {
+                return 'Wenn Sie fortfahren gehen eventuell Daten verloren!';
+            }
+        });
     };
 
     editor.run = function () {

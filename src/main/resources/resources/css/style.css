@@ -50,6 +50,7 @@ a:focus {
     height: 32px;
     width: 32px;
     margin: -6px 10px -6px 0;
+    border-radius: 50%;
 }
 
 .navbar-nav > li > .dropdown-menu {
@@ -202,32 +203,54 @@ a:focus {
 .colorpicker-element .input-group-addon i {
     border: 1px solid #999;
 }
-
 /*Profile Container*/
 
+#profile_dropdown .dropdown-menu {
+    width: 450px;
+    padding: 0;
+    margin: 0;
+}
+
+#profile_dropdown .row {
+    padding: 0;
+    margin: 0;
+}
+
+#profile_dropdown .col-md-3 {
+    padding: 0;
+    margin: 0;
+    width: 149px;
+}
+
+#profile_dropdown .col-md-9 {
+    padding: 0;
+    margin: 0;
+    width: 299px;
+}
+
 #profil_container {
-    position: absolute;
-    display: block;
-    top: 50px;
-    right: -20px;
+    padding: 0;
+    margin: 0;
     background: #fff;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 
 .profile-sidebar {
     padding: 20px 0 10px 0;
-    position: relative;
     height: 60%;
     width: 150px;
-    border-right-color: #222222;
-    border-right-style: dashed;
 }
 
 .profile-content {
-    position: relative;
     padding: 20px;
-    margin-left: 25px;
     width: 300px;
+    min-height: 420px;
+    border-left: 2px #ddd solid;
+    display: block;
+}
+
+#update-user {
+    margin: 0;
 }
 
 .profile-userpic img {
@@ -266,6 +289,7 @@ a:focus {
 
 .profile-usermenu ul li {
     border-bottom: 1px solid #f0f4f7;
+    margin-left: 2px;
 }
 
 .profile-usermenu ul li:last-child {
@@ -299,32 +323,7 @@ a:focus {
     margin-left: -2px;
 }
 
-/* Friend Search*/
-.friend_search_result{
-    height:auto;
-    margin: 5px;
+#update-user .checkbox {
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
-
-.friend_search_item{
-    height: 60px;
-    width:100%;
-    float: left;
-    padding: 5px 5px 5px 5px;
-    border-style: solid;
-    border-color: #080808;
-}
-.img-fsearch{
-    width: 50px;
-    float:left;
-}
-
-.btn-fsearch{
-    position: relative;
-    float:right;
-    margin-top: 10px;
-}
-
-.f_clearfix{
-    float:none;
-}
-

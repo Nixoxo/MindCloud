@@ -1,25 +1,22 @@
 mindcloud.modules.menu = {};
 (function (menu) {
     menu.init = function () {
-        $('.navbar-inverse').find('[data-toggle="dropdown"]').hover(function (event) {
+        /*
+        $('#menu-user').hover(function (event) {
             if (!$(this).parent().hasClass('open')) {
                 $(this).dropdown('toggle');
             }
-        });
-        $('.navbar-inverse').find('.navbar-nav').hover(undefined, function (event) {
-            $.each($(this).find('[data-toggle="dropdown"]'), function (index, dropdown) {
-                if ($(dropdown).parent().hasClass('open')) {
-                    $(dropdown).dropdown('toggle');
-                }
-            });
-        });
-
+        });*/
         $('#profile_menu a').click(function (event) {
             $('.profile-content').children().hide();
             index = $('#profile_menu a').index(this);
             $('.profile-content').children().eq(index).show();
             $('#profile_menu').children().removeClass('active');
             $('#profile_menu').children().eq(index).addClass('active');
+        });
+        $('#profil_container').click(function (event) {
+            event.preventDefault();
+            event.stopPropagation();
         });
         /*
                 $('.nav-side-menu li').click(function (event) {
@@ -30,15 +27,15 @@ mindcloud.modules.menu = {};
     };
 
     menu.run = function () {
+        $('#update-user').find('.btn-default').click(function (event) {
+            $('#update-user').find('[name="image"]').click();
+        });
+        $('#update-user').find('[name="image"]').change(function () {
+            var file = this.files[0];
+            $('#update-user').find('.btn-default').html(file.name);
+        });
         $('#create-mindmap').click(function (event) {
             mindcloud.modules.editor.createMindmap();
-        });
-        $('#profil_container').hide();
-        $('#profile_dropdown').mouseenter(function (event) {
-            if ($('#profil_container').is(":visible"))
-                $('#profil_container').hide();
-            else
-                $('#profil_container').show();
         });
         $('#searchInput').keyup(function (event) {
             if (event.keyCode == 13 || event.keyCode == 27) {
@@ -74,13 +71,22 @@ mindcloud.modules.menu = {};
         });
         mindcloud.client.registerAction('setMindmapList', menu.setMindmapList);
         mindcloud.client.registerAction('setSearchResult', menu.setSearchList)
+        mindcloud.client.registerAction('setUserMindmapData', setUserMindmapData)
         mindcloud.client.registerAction('setMindmap', function (mindmap) {
             mindcloud.client.invokeAction('getMindmapList');
+            mindcloud.client.invokeAction('getUserMindmapData');
         });
         mindcloud.client.registerAction('deleteMindmapSuccess', function (mindmap) {
             mindcloud.client.invokeAction('getMindmapList');
+            mindcloud.client.invokeAction('getUserMindmapData');
         });
     };
+
+    function setUserMindmapData(data) {
+        console.log(data);
+        $('#home-mindmaps-count').html(data.mindmapsCount);
+        $('#home-nodes-count').html(data.nodesCount);
+    }
 
     menu.setMindmapList = function (list) {
         var listPanel = $('#my-mindmaps');

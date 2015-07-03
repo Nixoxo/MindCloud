@@ -2,6 +2,7 @@ package de.pm.mindcloud.web;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import javax.servlet.http.HttpSession;
@@ -26,6 +27,10 @@ public class XMLSource {
         }
     }
 
+    public static XMLSource xml() {
+        return xml(null);
+    }
+
     private final Document source;
     private final Element mindcloud;
 
@@ -33,7 +38,9 @@ public class XMLSource {
         source = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
         mindcloud = source.createElement("mindcloud");
         source.appendChild(mindcloud);
-        addSessionAttributes(session);
+        if (session != null) {
+            addSessionAttributes(session);
+        }
     }
 
     private void addSessionAttributes(HttpSession session) {
@@ -72,7 +79,8 @@ public class XMLSource {
         Element node = source.createElement(tag);
         NodeList children = value.mindcloud.getChildNodes();
         for (int i = 0; i < children.getLength(); i++) {
-            node.appendChild(children.item(i));
+            Node child = source.importNode(children.item(i), true);
+            node.appendChild(child);
         }
         mindcloud.appendChild(node);
         return this;

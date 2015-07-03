@@ -24,6 +24,8 @@ public class User {
 
     private String name;
 
+    private String displayedName;
+
     private String password;
 
     @OneToMany
@@ -36,6 +38,7 @@ public class User {
     public User(String name, String password) {
         this();
         this.name = name.toLowerCase();
+        this.displayedName = name;
         this.password = password;
     }
 
@@ -52,7 +55,24 @@ public class User {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = name.toLowerCase();
+        if (displayedName == null || displayedName.length() == 0) {
+            displayedName = name;
+        }
+    }
+
+    public String getDisplayedName() {
+        if (displayedName == null || displayedName.length() == 0) {
+            return name;
+        }
+        return displayedName;
+    }
+
+    public void setDisplayedName(String displayedName) {
+        this.displayedName = displayedName;
+        if (displayedName == null || displayedName.length() == 0) {
+            this.displayedName = name;
+        }
     }
 
     public String getPassword() {
