@@ -51,8 +51,18 @@
     display: block;
 }
 
+.nav-side-menu li.top {
+    margin-top: 10px;
+    border-top: 1px solid #222;
+}
+
 .nav-side-menu li,
 .nav-side-menu li a {
     text-decoration: none;
     color: #f0f0f0;
+}
+
+.nav-side-menu li.empty,
+.nav-side-menu li.empty a {
+    color: #aaa;
 }

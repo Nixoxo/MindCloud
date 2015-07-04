@@ -1,34 +1,25 @@
 package de.pm.mindcloud.web.domain.response;
 
 /**
- * Created by samuel on 03.07.15.
+ * Created by samuel on 26.06.15.
  */
 public class MindmapDataResponse {
+    private String id;
+    private String name;
 
-    private int mindmapsCount;
-    private int nodesCount;
-
-    public MindmapDataResponse() {
+    public String getId() {
+        return id;
     }
 
-    public MindmapDataResponse(int mindmapsCount, int nodesCount) {
-        this.mindmapsCount = mindmapsCount;
-        this.nodesCount = nodesCount;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public int getMindmapsCount() {
-        return mindmapsCount;
+    public String getName() {
+        return name;
     }
 
-    public void setMindmapsCount(int mindmapsCount) {
-        this.mindmapsCount = mindmapsCount;
-    }
-
-    public int getNodesCount() {
-        return nodesCount;
-    }
-
-    public void setNodesCount(int nodesCount) {
-        this.nodesCount = nodesCount;
+    public void setName(String name) {
+        this.name = name;
     }
 }

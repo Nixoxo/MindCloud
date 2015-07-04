@@ -14,6 +14,7 @@ var mindcloud = {};
 
     core.started = function () {
         core.client.invokeAction('getMindmapList');
+        core.client.invokeAction('getSharedMindmapList');
         core.client.invokeAction('getUserMindmapData');
     };
 

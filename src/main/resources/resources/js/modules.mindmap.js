@@ -77,7 +77,7 @@ mindcloud.modules.mindmap = {};
         });
     };
 
-    mindmap.set = function (mindmap) {
+    mindmap.set = function (mindmap, isLocked) {
         container.empty();
         if (mindmap == undefined) {
             mindmap = {
@@ -88,33 +88,35 @@ mindcloud.modules.mindmap = {};
         cy = cytoscape({
             container: container.get(0),
             ready: function () {
-                cy.menu = cy.cxtmenu({
-                    selector: 'node',
-                    commands: [
-                        {
-                            content: '<span class="glyphicon glyphicon-edit"/>',
-                            select: function () {
-                                var node = this.json();
-                                mindcloud.modules.editor.editNode(node);
-                            }
+                if (!isLocked) {
+                    cy.menu = cy.cxtmenu({
+                        selector: 'node',
+                        commands: [
+                            {
+                                content: '<span class="glyphicon glyphicon-edit"/>',
+                                select: function () {
+                                    var node = this.json();
+                                    mindcloud.modules.editor.editNode(node);
+                                }
                         }, {
-                            content: '<span class="glyphicon glyphicon-plus"/>',
-                            select: function () {
-                                var node = this.json();
-                                mindcloud.modules.editor.addNode(node);
-                            }
+                                content: '<span class="glyphicon glyphicon-plus"/>',
+                                select: function () {
+                                    var node = this.json();
+                                    mindcloud.modules.editor.addNode(node);
+                                }
                         }, {
-                            content: '<span class="glyphicon glyphicon-trash"/>',
-                            select: function () {
-                                var node = this.json();
-                                mindcloud.modules.editor.removeNode(node);
-                            }
+                                content: '<span class="glyphicon glyphicon-trash"/>',
+                                select: function () {
+                                    var node = this.json();
+                                    mindcloud.modules.editor.removeNode(node);
+                                }
                         }
                     ],
-                    menuRadius: 70,
-                    indicatorSize: 0,
-                    activePadding: 0
-                });
+                        menuRadius: 70,
+                        indicatorSize: 0,
+                        activePadding: 0
+                    });
+                }
             },
             maxZoom: 2,
             userZoomingEnabled: true,

@@ -1,25 +1,37 @@
 package de.pm.mindcloud.web.domain.response;
 
+import de.pm.mindcloud.persistence.domain.Mindmap;
+
 /**
- * Created by samuel on 26.06.15.
+ * Created by samuel on 04.07.15.
  */
 public class MindmapResponse {
-    private String id;
-    private String name;
 
-    public String getId() {
-        return id;
+    private Mindmap mindmap;
+
+    private boolean isLocked;
+
+    public MindmapResponse() {
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public MindmapResponse(Mindmap mindmap, boolean isLocked) {
+        this.mindmap = mindmap;
+        this.isLocked = isLocked;
     }
 
-    public String getName() {
-        return name;
+    public Mindmap getMindmap() {
+        return mindmap;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setMindmap(Mindmap mindmap) {
+        this.mindmap = mindmap;
+    }
+
+    public boolean isLocked() {
+        return isLocked;
+    }
+
+    public void setIsLocked(boolean isLocked) {
+        this.isLocked = isLocked;
     }
 }

@@ -31,6 +31,9 @@ public class User {
     @OneToMany
     private List<Mindmap> mindmaps;
 
+    @OneToMany
+    private List<Mindmap> sharedMindmaps;
+
     public User() {
         mindmaps = new ArrayList<>();
     }
@@ -92,6 +95,29 @@ public class User {
         return mindmaps;
     }
 
+    public void setSharedMindmaps(List<Mindmap> mindmaps) {
+        mindmaps.forEach(this::putSharedMindmap);
+    }
+
+    public List<Mindmap> getSharedMindmaps() {
+        Collections.sort(sharedMindmaps, (mindmap0, mindmap1) -> Collator.getInstance().compare(mindmap0.getName(), mindmap1.getName()));
+        return sharedMindmaps;
+    }
+
+    public void putSharedMindmap(Mindmap mindmap) {
+        if (mindmap.getId() == null) {
+            return;
+        }
+        removeSharedMindmap(mindmap.getId());
+        sharedMindmaps.add(mindmap);
+    }
+
+    public Mindmap removeSharedMindmap(String id) {
+        Mindmap mindmap = getMindmap(id);
+        sharedMindmaps.remove(mindmap);
+        return mindmap;
+    }
+
     public void putMindmap(Mindmap mindmap) {
         if (mindmap.getId() == null) {
             return;
@@ -117,6 +143,15 @@ public class User {
                 return mindmap;
             }
         }
+        for (Mindmap mindmap : sharedMindmaps) {
+            if (mindmap.getId().equals(id)) {
+                return mindmap;
+            }
+        }
         return null;
+    }
+
+    public boolean isMindmapLocked(String mindmapId) {
+        return sharedMindmaps.contains(getMindmap(mindmapId));
     }
 }

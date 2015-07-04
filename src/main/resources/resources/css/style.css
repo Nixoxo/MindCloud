@@ -327,3 +327,8 @@ a:focus {
     margin-top: 5px;
     margin-bottom: 5px;
 }
+
+.center {
+    display: block;
+    margin: 0 auto;
+}

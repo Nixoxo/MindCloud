@@ -1,20 +1,25 @@
 package de.pm.mindcloud.web.controller;
 
+import com.google.zxing.EncodeHintType;
+import de.pm.mindcloud.persistence.domain.Mindmap;
 import de.pm.mindcloud.persistence.domain.User;
 import de.pm.mindcloud.persistence.repository.UserAccess;
 import de.pm.mindcloud.web.domain.response.MindCloudMessage;
+import net.glxn.qrgen.core.image.ImageType;
+import net.glxn.qrgen.javase.QRCode;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.jws.soap.SOAPBinding;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +46,12 @@ public class WebController {
     public ModelAndView index(HttpSession session) {
         if (session.getAttribute("user") == null) {
             return new ModelAndView("redirect:/login");
+        }
+        if (session.getAttribute("share") != null) {
+            User user = (User) session.getAttribute(USER);
+            user.putSharedMindmap((Mindmap) session.getAttribute("share"));
+            userAccess.save(user);
+            session.setAttribute("session", null);
         }
         ModelAndView model = new ModelAndView("index");
         if (session.getAttribute("message") != null) {
@@ -117,6 +128,9 @@ public class WebController {
     @RequestMapping(value = "/profileimage")
     @ResponseBody
     public byte[] getProfileImage(HttpSession session) throws IOException {
+        if (session.getAttribute(USER) == null) {
+            return null;
+        }
         User user = (User) session.getAttribute(USER);
         return imageController.getImage(user);
     }
@@ -164,6 +178,50 @@ public class WebController {
             }
             session.setAttribute("message", new MindCloudMessage(text, MindCloudMessage.Type.SUCCESS));
         }
+        return "redirect:/";
+    }
+
+    @RequestMapping(value = "/shareurl/{mindmapId}")
+    @ResponseBody
+    public String getUrlForShareMindmap(HttpServletRequest request, HttpSession session, @PathVariable("mindmapId") String mindmapId) throws IOException {
+        if (session.getAttribute(USER) == null) {
+            return null;
+        }
+        User user = (User) session.getAttribute(USER);
+        Mindmap mindmap = user.getMindmap(mindmapId);
+        if (mindmap != null) {
+            URL url = new URL(request.getRequestURL().toString());
+
+            String scheme = url.getProtocol();
+            String host = url.getHost();
+            int port = url.getPort();
+
+            return  scheme + "://" + host + ":" + port + "/share/" + mindmap.getId() + "/" + user.getId();
+        }
+        return null;
+    }
+
+    @RequestMapping(value = "/shareqrcode/{mindmapId}")
+    @ResponseBody
+    public byte[] getQrCodeForShareMindmap(HttpServletRequest request, HttpSession session, @PathVariable("mindmapId") String mindmapId) throws IOException {
+        if (session.getAttribute(USER) == null) {
+            return null;
+        }
+        User user = (User) session.getAttribute(USER);
+        Mindmap mindmap = user.getMindmap(mindmapId);
+        if (mindmap != null) {
+            String url = getUrlForShareMindmap(request, session, mindmapId);
+            File qrcode = QRCode.from(url).to(ImageType.JPG).withSize(250, 250).file();
+            return IOUtils.toByteArray(new FileInputStream(qrcode));
+        }
+        return null;
+    }
+
+    @RequestMapping(value = "/share/{mindmapId}/{sharedUserId}")
+    public String shareMindmap(HttpSession session, @PathVariable("mindmapId") String mindmapId, @PathVariable("sharedUserId") String userId) {
+        User sharedUser = userAccess.find(userId);
+        Mindmap mindmap = sharedUser.getMindmap(mindmapId);
+        session.setAttribute("share", mindmap);
         return "redirect:/";
     }
 

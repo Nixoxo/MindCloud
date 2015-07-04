@@ -160,7 +160,7 @@
 
                 <div class="menu-list">
                     <ul class="menu-content">
-                        <li id="search-results-header" data-toggle="collapse" data-target="#search-results" aria-expanded="true" class="hidden">
+                        <li id="search-results-header" data-toggle="collapse" data-target="#search-results" aria-expanded="true" class="hidden top">
                             <a href="#">
                                 <span class="glyphicon glyphicon-search"></span> Suchergebnisse
                                 <span class="caret"></span>
@@ -168,15 +168,21 @@
                         </li>
                         <ul class="sub-menu collapse in hidden" id="search-results">
                         </ul>
-                        <li data-toggle="collapse" data-target="#my-mindmaps" aria-expanded="true">
+                        <li data-toggle="collapse" data-target="#my-mindmaps" aria-expanded="true" class="top">
                             <a href="#">
                                 <span class="glyphicon glyphicon-th-list"></span> Meine Mindmaps
                                 <span class="caret"></span>
                             </a>
                         </li>
-                        <ul class="sub-menu collapse in" id="my-mindmaps">
-                        </ul>
-                        <li id="create-mindmap">
+                        <ul class="sub-menu collapse in" id="my-mindmaps"></ul>
+                        <li class="collapsed" data-toggle="collapse" data-target="#shared-mindmaps">
+                            <a href="#">
+                                <span class="glyphicon glyphicon-share"></span> Freigegebene Mindmaps
+                                <span class="caret"></span>
+                            </a>
+                        </li>
+                        <ul class="sub-menu collapse collapsed" id="shared-mindmaps"></ul>
+                        <li id="create-mindmap" class="top">
                             <a href="#">
                                 <span class="glyphicon glyphicon-plus-sign"></span> Neue Mindmap
                             </a>
@@ -199,7 +205,7 @@
                                 </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="#">
+                                    <a id="editor-share" href="#">
                                         <span class="glyphicon glyphicon-share"></span> Freigeben
                                     </a>
                                 </li>
@@ -252,43 +258,6 @@
                                 </li>
                             </ul>
                         </li>
-                        <!--
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Ansicht <span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">Zoom</a>
-                                    </li>
-                                    <li class="dropdown dropdown-submenu">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Level 2</a>
-                                        <ul class="dropdown-menu">
-                                            <li>
-                                                <a href="#">Link 3</a>
-                                            </li>
-                                            <li>
-                                                <a href="#">Link 3</a>
-                                            </li>
-                                            <li>
-                                                <a href="#">Link 3</a>
-                                            </li>
-                                            <li class="dropdown dropdown-submenu">
-                                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Level 3</a>
-                                                <ul class="dropdown-menu">
-                                                    <li>
-                                                        <a href="#">Link 3</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">Link 3</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">Link 3</a>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                            -->
                     </ul>
                     <a href="#" class="mindmap-name navbar-text navbar-right"></a>
                 </nav>

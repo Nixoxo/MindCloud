@@ -40,7 +40,7 @@ mindcloud.ui = {};
             });
             dialog.modal('hide');
         });
-        dialog.find('.cancel').html('Abbrechen').off("click").click(function (event) {
+        dialog.find('.cancel').removeClass('hidden').html('Abbrechen').off("click").click(function (event) {
             callback.call(this, {
                 action: 'cancel'
             });
@@ -49,6 +49,19 @@ mindcloud.ui = {};
         dialog.modal('show');
         input.focus();
         input.val(defaultValue);
+    };
+
+    ui.showMessageDialog = function (title, message) {
+        dialog.find('.modal-dialog').removeClass('modal-sm');
+        dialog.find('.modal-title').html(title);
+        dialog.find('.modal-body').html(message);
+        dialog.find('.confirm').html('OK').off("click").click(function (event) {
+            dialog.modal('hide');
+        });
+        dialog.find('.cancel').addClass('hidden').html('Abbrechen').off("click").click(function (event) {
+            dialog.modal('hide');
+        });
+        dialog.modal('show');
     };
 
     ui.showConfirmDialog = function (title, message, callback) {
@@ -61,7 +74,7 @@ mindcloud.ui = {};
             });
             dialog.modal('hide');
         });
-        dialog.find('.cancel').html('Nein').off("click").click(function (event) {
+        dialog.find('.cancel').removeClass('hidden').html('Nein').off("click").click(function (event) {
             callback.call(this, {
                 action: 'no'
             });
@@ -104,7 +117,7 @@ mindcloud.ui = {};
             });
             dialog.modal('hide');
         });
-        dialog.find('.cancel').html('Abbrechen').off("click").click(function (event) {
+        dialog.find('.cancel').removeClass('hidden').html('Abbrechen').off("click").click(function (event) {
             callback.call(this, {
                 action: 'cancel'
             });

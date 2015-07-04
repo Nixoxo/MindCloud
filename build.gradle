@@ -6,6 +6,9 @@ repositories {
 buildscript {
     repositories {
         mavenCentral()
+        maven {
+            url "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.1.RELEASE")
@@ -61,6 +64,8 @@ dependencies {
 
     compile 'commons-lang:commons-lang:2.6'
     compile 'commons-io:commons-io:2.4'
+
+    compile ("net.glxn.qrgen:javase:2.0")
 
     compile 'org.eclipse.mylyn.github:org.eclipse.egit.github.core:2.1.5'
 }

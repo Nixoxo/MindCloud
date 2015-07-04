@@ -1,12 +1,6 @@
 mindcloud.modules.menu = {};
 (function (menu) {
     menu.init = function () {
-        /*
-        $('#menu-user').hover(function (event) {
-            if (!$(this).parent().hasClass('open')) {
-                $(this).dropdown('toggle');
-            }
-        });*/
         $('#profile_menu a').click(function (event) {
             $('.profile-content').children().hide();
             index = $('#profile_menu a').index(this);
@@ -18,12 +12,13 @@ mindcloud.modules.menu = {};
             event.preventDefault();
             event.stopPropagation();
         });
-        /*
-                $('.nav-side-menu li').click(function (event) {
-                    $('.nav-side-menu li').removeClass('active');
-                    $(this).addClass('active');
-                });
-        */
+        $('.nav-side-menu li').click(function (event) {
+            /*
+            $('.nav-side-menu li').removeClass('active');
+            $(this).addClass('active');
+            */
+            event.preventDefault();
+        });
     };
 
     menu.run = function () {
@@ -70,6 +65,7 @@ mindcloud.modules.menu = {};
             reader.readAsText(file);
         });
         mindcloud.client.registerAction('setMindmapList', menu.setMindmapList);
+        mindcloud.client.registerAction('setSharedMindmapList', menu.setSharedMindmapList);
         mindcloud.client.registerAction('setSearchResult', menu.setSearchList)
         mindcloud.client.registerAction('setUserMindmapData', setUserMindmapData)
         mindcloud.client.registerAction('setMindmap', function (mindmap) {
@@ -83,13 +79,36 @@ mindcloud.modules.menu = {};
     };
 
     function setUserMindmapData(data) {
-        console.log(data);
         $('#home-mindmaps-count').html(data.mindmapsCount);
         $('#home-nodes-count').html(data.nodesCount);
     }
 
     menu.setMindmapList = function (list) {
+        if (list.length == 0) {
+            $('li[data-target="#my-mindmaps"]').addClass('empty');
+        } else {
+            $('li[data-target="#my-mindmaps"]').removeClass('empty');
+        }
         var listPanel = $('#my-mindmaps');
+        listPanel.empty();
+        $.each(list, function (index, item) {
+            $('<li>').attr({
+                'id': item.id
+            }).click(function (event) {
+                mindcloud.client.invokeAction('getMindmap', {
+                    id: item.id
+                });
+            }).html(item.name).appendTo(listPanel);
+        });
+    };
+
+    menu.setSharedMindmapList = function (list) {
+        if (list.length == 0) {
+            $('li[data-target="#shared-mindmaps"]').addClass('empty');
+        } else {
+            $('li[data-target="#shared-mindmaps"]').removeClass('empty');
+        }
+        var listPanel = $('#shared-mindmaps');
         listPanel.empty();
         $.each(list, function (index, item) {
             $('<li>').attr({
