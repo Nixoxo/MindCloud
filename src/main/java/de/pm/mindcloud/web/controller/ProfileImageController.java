@@ -21,9 +21,12 @@ public class ProfileImageController {
         if (profileImage.exists()) {
             return IOUtils.toByteArray(new FileInputStream(profileImage));
         }
-        File defaultImage = new ClassPathResource("resources/img/user.png").getFile();
-        return IOUtils.toByteArray(new FileInputStream(defaultImage));
-
+        try {
+            File defaultImage = new ClassPathResource("resources/img/user.png").getFile();
+            return IOUtils.toByteArray(new FileInputStream(defaultImage));
+        } catch (Exception e) {
+            return IOUtils.toByteArray(ClassLoader.getSystemResourceAsStream("resources/img/user.png"));
+        }
     }
 
     private File getImageFolder() {

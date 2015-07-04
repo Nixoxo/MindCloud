@@ -9,7 +9,6 @@ mindcloud.modules.menu = {};
             $('#profile_menu').children().eq(index).addClass('active');
         });
         $('#profil_container').click(function (event) {
-            event.preventDefault();
             event.stopPropagation();
         });
         $('.nav-side-menu li').click(function (event) {
@@ -22,12 +21,12 @@ mindcloud.modules.menu = {};
     };
 
     menu.run = function () {
-        $('#update-user').find('.btn-default').click(function (event) {
-            $('#update-user').find('[name="image"]').click();
+        $('#update-user-profile').find('.btn-default').click(function (event) {
+            $('#update-user-profile').find('[name="image"]').click();
         });
-        $('#update-user').find('[name="image"]').change(function () {
+        $('#update-user-profile').find('[name="image"]').change(function () {
             var file = this.files[0];
-            $('#update-user').find('.btn-default').html(file.name);
+            $('#update-user-profile').find('.btn-default').html(file.name);
         });
         $('#create-mindmap').click(function (event) {
             mindcloud.modules.editor.createMindmap();

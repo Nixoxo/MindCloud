@@ -92,7 +92,7 @@
                                                             </table>
                                                         </div>
                                                         <div style="display:none">
-                                                            <form id="update-user" action="/updateProfile" method="post" enctype="multipart/form-data">
+                                                            <form id="update-user-profile" action="/updateProfile" method="post" enctype="multipart/form-data">
                                                                 <div class="form-group">
                                                                     <label>Angezeigter Name</label>
                                                                     <input type="text" name="displayedname" placeholder="Angezeigten Namen ändern..." class="form-control">
@@ -118,9 +118,7 @@
                                                                     <input type="password" name="password2" placeholder="Passwort ändern..." class="form-control" />
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <a class="btn btn-default form-control">Bild
-                                                                            ändern
-                                                                        </a>
+                                                                    <a class="btn btn-default form-control">Bild ändern</a>
                                                                     <input class="hidden" type="file" name="image" accept="image/png, image/jpeg, image/gif" />
                                                                 </div>
                                                                 <div class="checkbox pull-left">

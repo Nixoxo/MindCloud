@@ -196,7 +196,7 @@ public class WebController {
             String host = url.getHost();
             int port = url.getPort();
 
-            return  scheme + "://" + host + ":" + port + "/share/" + mindmap.getId() + "/" + user.getId();
+            return  scheme + "://" + host + ((port >= 0) ? ":" + port : "") + "/share/" + mindmap.getId() + "/" + user.getId();
         }
         return null;
     }
