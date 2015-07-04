@@ -78,7 +78,7 @@ mindcloud.modules.editor = {};
     function shareMindmap() {
         var mindmap = mindcloud.cache.getMindmap();
         $.get('/shareurl/' + mindmap.id, function (url) {
-            var message = '<p>Um die Mindmap freizugeben versenden Sie einfach den Link und Ihre Freunde werden auf dise Mindmap zugreifen können.</p><input value="' + url + '" class="form-control" /><img class="center" src="http://localhost:8080/shareqrcode/' + mindmap.id + '"/>';
+            var message = '<p>Um die Mindmap freizugeben versenden Sie einfach den Link und Ihre Freunde werden auf dise Mindmap zugreifen können.</p><input value="' + url + '" class="form-control" /><img class="center" src="/shareqrcode/' + mindmap.id + '"/>';
             mindcloud.ui.showMessageDialog(mindmap.name + ' freigeben', message);
         });
     }
