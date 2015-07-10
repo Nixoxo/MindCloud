@@ -75,6 +75,10 @@ mindcloud.modules.mindmap = {};
                 cy.makeLayout(mindmapLayout).run();
             }, 200);
         });
+        //Disables the Right-click contextmenu
+        $("*").contextmenu( function() {
+            return false;
+        });
     };
 
     mindmap.set = function (mindmap, isLocked) {
