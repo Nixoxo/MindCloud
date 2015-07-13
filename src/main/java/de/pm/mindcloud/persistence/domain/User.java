@@ -36,6 +36,7 @@ public class User {
 
     public User() {
         mindmaps = new ArrayList<>();
+        sharedMindmaps = new ArrayList<>();
     }
 
     public User(String name, String password) {

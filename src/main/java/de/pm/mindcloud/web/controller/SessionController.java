@@ -1,6 +1,8 @@
 package de.pm.mindcloud.web.controller;
 
 import de.pm.mindcloud.persistence.domain.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpSession;
@@ -17,6 +19,9 @@ public class SessionController implements HttpSessionListener {
     public static final String USER = "user";
 
     private Map<String, HttpSession> sessions;
+
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
 
     public SessionController() {
         sessions = new HashMap<>();
@@ -45,5 +50,10 @@ public class SessionController implements HttpSessionListener {
     public void sessionDestroyed(HttpSessionEvent httpSessionEvent) {
         HttpSession session = httpSessionEvent.getSession();
         sessions.remove(session.getId());
+        send("/logout", true);
+    }
+
+    public void send(String destination, Object message) {
+        messagingTemplate.convertAndSend(destination, message);
     }
 }

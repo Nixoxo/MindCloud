@@ -332,3 +332,11 @@ a:focus {
     display: block;
     margin: 0 auto;
 }
+
+#export-image-background-color {
+    margin-bottom: 10px;
+}
+
+#update-user-profile {
+    margin: 0;
+}

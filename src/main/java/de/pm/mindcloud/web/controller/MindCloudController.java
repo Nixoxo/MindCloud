@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
 import javax.validation.constraints.Min;
@@ -34,26 +35,38 @@ public class MindCloudController {
     @Autowired
     private UserAccess userAccess;
 
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
+
     @MessageMapping("/getMindmapList")
     @SendTo("/setMindmapList")
     public List<MindmapDataResponse> getMindmapList(SimpMessageHeaderAccessor headerAccessor) throws Exception {
         User user = getUserFromRequest(headerAccessor);
-        return getMindmapResponses(user.getMindmaps());
+        if (user != null) {
+            return getMindmapResponses(user.getMindmaps());
+        }
+        return null;
     }
 
     @MessageMapping("/getSharedMindmapList")
     @SendTo("/setSharedMindmapList")
     public List<MindmapDataResponse> getSharedMindmapList(SimpMessageHeaderAccessor headerAccessor) throws Exception {
         User user = getUserFromRequest(headerAccessor);
-        return getMindmapResponses(user.getSharedMindmaps());
+        if (user != null) {
+            return getMindmapResponses(user.getSharedMindmaps());
+        }
+        return null;
     }
 
     @MessageMapping("/searchMindmapList")
     @SendTo("/setSearchResult")
     public List<MindmapDataResponse> searchMindmapList(SimpMessageHeaderAccessor headerAccessor, SearchRequest request) throws Exception {
         User user = getUserFromRequest(headerAccessor);
-        List<Mindmap> searchResult = searchMindmaps(request.getSearch(), user.getMindmaps(), user.getSharedMindmaps());
-        return getMindmapResponses(searchResult);
+        if (user != null) {
+            List<Mindmap> searchResult = searchMindmaps(request.getSearch(), user.getMindmaps(), user.getSharedMindmaps());
+            return getMindmapResponses(searchResult);
+        }
+        return null;
     }
 
     private List<Mindmap> searchMindmaps(String search, List<Mindmap>... mindmaps) {
@@ -79,9 +92,11 @@ public class MindCloudController {
     @SendTo("/setMindmap")
     public MindmapResponse getMindmap(SimpMessageHeaderAccessor headerAccessor, MindmapRequest request) throws Exception {
         User user = getUserFromRequest(headerAccessor);
-        Mindmap mindmap = user.getMindmap(request.getId());
-        if (mindmap != null) {
-            return new MindmapResponse(mindmap, user.isMindmapLocked(mindmap.getId()));
+        if (user != null) {
+            Mindmap mindmap = user.getMindmap(request.getId());
+            if (mindmap != null) {
+                return new MindmapResponse(mindmap, user.isMindmapLocked(mindmap.getId()));
+            }
         }
         return null;
     }
@@ -90,7 +105,7 @@ public class MindCloudController {
     @SendTo("/setMindmap")
     public MindmapResponse saveMindmap(SimpMessageHeaderAccessor headerAccessor, Mindmap mindmap) {
         User user = getUserFromRequest(headerAccessor);
-        if (!user.isMindmapLocked(mindmap.getId())) {
+        if (user != null && !user.isMindmapLocked(mindmap.getId())) {
             mindmapAccess.save(mindmap);
             user.putMindmap(mindmap);
             userAccess.save(user);
@@ -103,11 +118,13 @@ public class MindCloudController {
     @SendTo("/deleteMindmapSuccess")
     public boolean deleteMindmap(SimpMessageHeaderAccessor headerAccessor, MindmapRequest request) {
         User user = getUserFromRequest(headerAccessor);
-        Mindmap mindmap = user.removeMindmap(request.getId());
-        if (mindmap != null) {
-            mindmapAccess.delete(mindmap);
-            userAccess.save(user);
-            return true;
+        if (user != null) {
+            Mindmap mindmap = user.removeMindmap(request.getId());
+            if (mindmap != null) {
+                mindmapAccess.delete(mindmap);
+                userAccess.save(user);
+                return true;
+            }
         }
         return false;
     }
@@ -116,16 +133,27 @@ public class MindCloudController {
     @SendTo("/setUserMindmapData")
     public UserMindmapDataResponse getUserMindmapData(SimpMessageHeaderAccessor headerAccessor) {
         User user = getUserFromRequest(headerAccessor);
-        int mindmapsCount = user.getMindmaps().size();
-        int nodesCount = 0;
-        for (Mindmap mindmap : user.getMindmaps()) {
-            nodesCount += mindmap.getNodes().size();
+        if (user != null) {
+            int mindmapsCount = user.getMindmaps().size();
+            int nodesCount = 0;
+            for (Mindmap mindmap : user.getMindmaps()) {
+                nodesCount += mindmap.getNodes().size();
+            }
+            return new UserMindmapDataResponse(mindmapsCount, nodesCount);
         }
-        return new UserMindmapDataResponse(mindmapsCount, nodesCount);
+        return null;
     }
 
     private User getUserFromRequest(SimpMessageHeaderAccessor headerAccessor) {
         String httpSessionId = (String) headerAccessor.getSessionAttributes().get("HTTPSESSIONID");
-        return sessionController.getUserBySessionId(httpSessionId);
+        User user = sessionController.getUserBySessionId(httpSessionId);
+        if (user == null) {
+            send("/logout", true);
+        }
+        return user;
+    }
+
+    public void send(String destination, Object message) {
+        messagingTemplate.convertAndSend(destination, message);
     }
 }

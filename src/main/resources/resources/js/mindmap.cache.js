@@ -2,6 +2,7 @@ mindcloud.cache = {};
 (function (cache) {
     var timeIndex;
     var history;
+    var saved;
 
     cache.createMindmap = function (name) {
         var mindmap = {
@@ -18,11 +19,13 @@ mindcloud.cache = {};
             edges: []
         };
         cache.setMindmap(mindmap);
+        saved = false;
     };
 
     cache.setMindmap = function (mindmap) {
         timeIndex = 0;
         history = [mindmap];
+        saved = true;
     };
 
     cache.getMindmap = function () {
@@ -59,6 +62,7 @@ mindcloud.cache = {};
             history.splice(timeIndex, history.length - timeIndex);
         }
         history.push(mindmap);
+        saved = false;
     }
 
     function getCurrentMindmapClone() {
@@ -139,5 +143,9 @@ mindcloud.cache = {};
         var mindmap = getCurrentMindmapClone();
         mindmap.name = name;
         pushNewVersion(mindmap);
+    };
+
+    cache.isSaved = function() {
+        return saved;
     };
 })(mindcloud.cache);

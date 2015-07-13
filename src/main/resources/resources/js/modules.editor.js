@@ -22,7 +22,7 @@ mindcloud.modules.editor = {};
             }
         });
         $(window).bind('beforeunload', function () {
-            if (mindcloud.cache.getMindmap() != undefined) {
+            if (!mindcloud.cache.isSaved()) {
                 return 'Wenn Sie fortfahren gehen eventuell Daten verloren!';
             }
         });

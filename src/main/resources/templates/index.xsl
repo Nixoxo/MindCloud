@@ -128,7 +128,6 @@
                                                                 </div>
                                                                 <button type="submit" class="btn btn-primary pull-right">Speichern
                                                                 </button>
-                                                                <div class="clearfix" />
                                                             </form>
                                                         </div>
                                                     </div>

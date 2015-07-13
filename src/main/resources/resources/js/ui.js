@@ -49,6 +49,7 @@ mindcloud.ui = {};
         dialog.modal('show');
         input.focus();
         input.val(defaultValue);
+        input.select();
     };
 
     ui.showMessageDialog = function (title, message) {

@@ -12,10 +12,6 @@ mindcloud.modules.menu = {};
             event.stopPropagation();
         });
         $('.nav-side-menu li').click(function (event) {
-            /*
-            $('.nav-side-menu li').removeClass('active');
-            $(this).addClass('active');
-            */
             event.preventDefault();
         });
     };
@@ -94,12 +90,28 @@ mindcloud.modules.menu = {};
             $('<li>').attr({
                 'id': item.id
             }).click(function (event) {
-                mindcloud.client.invokeAction('getMindmap', {
-                    id: item.id
-                });
+                openMindmap(item.id);
             }).html(item.name).appendTo(listPanel);
         });
     };
+
+    function openMindmap(id) {
+        if (mindcloud.cache.isSaved()) {
+            getMindmap(id);
+        } else {
+            mindcloud.ui.showConfirmDialog('Mindmap öffnen', 'Die aktuell geöffnete Mindmap ist noch nicht gespeichert. Wenn Sie eine neue Mindmap öffnen wollen gehen die Änderungen verloren. Fortfahren?', function(event) {
+                if (event.action == 'yes') {
+                    getMindmap(id);
+                }
+            });
+        }
+    }
+
+    function getMindmap(id) {
+        mindcloud.client.invokeAction('getMindmap', {
+            id: id
+        });
+    }
 
     menu.setSharedMindmapList = function (list) {
         if (list.length == 0) {

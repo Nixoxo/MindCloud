@@ -13,6 +13,9 @@ var mindcloud = {};
     };
 
     core.started = function () {
+        core.client.registerAction('/logout', function() {
+            window.location.reload();
+        });
         core.client.invokeAction('getMindmapList');
         core.client.invokeAction('getSharedMindmapList');
         core.client.invokeAction('getUserMindmapData');
